@@ -1,0 +1,1 @@
+<h1>RICBOT is amused</h1>

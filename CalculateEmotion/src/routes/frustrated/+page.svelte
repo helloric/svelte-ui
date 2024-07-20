@@ -1,0 +1,1 @@
+<h1>RICBOT is frustrated</h1>
