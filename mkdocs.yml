@@ -3,12 +3,12 @@ site_url: http://127.0.0.1:8000/
 nav:
   - Docker:
     - Getting Started: getting-started.md
-  - Architecture:
-    - Overview: architecture/overview.md
-  - Messages:
-    - Overview: messages/overview.md
-  - Informations:
-    - Exhibits: informations/exhibits.md
+#  - Architecture:
+ #   - Overview: architecture/overview.md
+  #- Messages:
+   # - Overview: messages/overview.md
+  #- Informations:
+   # - Exhibits: informations/exhibits.md
 
 theme:
   name: material
