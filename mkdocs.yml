@@ -1,0 +1,46 @@
+site_name: HelloRIC Documentation
+site_url: http://127.0.0.1:8000/
+nav:
+  - Docker:
+    - Getting Started: getting-started.md
+  - Architecture:
+    - Overview: architecture/overview.md
+  - Messages:
+    - Overview: messages/overview.md
+  - Informations:
+    - Exhibits: informations/exhibits.md
+
+theme:
+  name: material
+  palette:
+   - scheme: default
+     toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+   - scheme: slate
+     toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+        
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src]
