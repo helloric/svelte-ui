@@ -1,0 +1,1 @@
+This module manages the emotion shown on screen

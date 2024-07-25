@@ -2,9 +2,10 @@ site_name: HelloRIC Documentation
 site_url: http://127.0.0.1:8000/
 nav:
   - Docker:
-    - Getting Started: getting-started.md
-#  - Architecture:
- #   - Overview: architecture/overview.md
+    - Getting Started: getting-Started.md
+  - Modules:
+    - Emotion Calculating: calculateEmotion.md
+    - Displayed Emotion: shownEmotion.md
   #- Messages:
    # - Overview: messages/overview.md
   #- Informations:
