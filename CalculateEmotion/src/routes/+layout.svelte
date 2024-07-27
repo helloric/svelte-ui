@@ -10,7 +10,7 @@
   import Happy from "./happy/+page.svelte";
   import Sad from "./sad/+page.svelte";
   import Worried from "./worried/+page.svelte";
-  
+
   //Import assets
   import base from "$lib/assets/base.svg";
 
@@ -59,5 +59,11 @@ TODO: Mabye change to switch statement-->
 <div class="faceContainter">
   <img src={base} alt="" />
 </div>
+
+<!--- Mabye for later
+<style>
+ *{background-color: black}
+</style>
+--->
 
 <slot />
