@@ -11,9 +11,6 @@
   import Sad from "./sad/+page.svelte";
   import Worried from "./worried/+page.svelte";
 
-  //Import assets
-  import base from "$lib/assets/base.svg";
-
   //Calculates current Emotion and sets the Svelte Store to the needed index
   //setEmotion(0);
   calculateEmotion();
@@ -55,10 +52,6 @@ TODO: Mabye change to switch statement-->
 {:else}
   <p>Emotion not found</p>
 {/if}
-
-<div class="faceContainter">
-  <img src={base} alt="" />
-</div>
 
 <!--- Mabye for later
 <style>

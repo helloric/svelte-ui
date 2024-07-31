@@ -1,0 +1,41 @@
+.faceContainter {
+    width: 50%;
+    position: relative;
+    margin: 0, auto;
+}
+
+.faceContainter .base {
+    width: 100%;
+}
+
+.faceContainter .eyeL {
+    position: absolute;
+    top: 0;
+    bottom: 30%;
+    left: 0;
+    right: 40%;
+    margin: auto;
+    width: 14.6%;
+}
+
+.faceContainter .eyeR {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    top: 0;
+    bottom: 30%;
+    left: 40%;
+    right: 0;
+    margin: auto;
+    width: 14.6%;
+}
+
+.mouth {
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
+}

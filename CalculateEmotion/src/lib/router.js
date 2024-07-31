@@ -11,7 +11,7 @@ export const currentEmotion = writable(0);
 /**
  * @type {number} Saves the Arousal Value
  */
-let arousal = 2;
+let arousal = 3;
 /**
  * @type {number} Saves the Valence Value
  */
