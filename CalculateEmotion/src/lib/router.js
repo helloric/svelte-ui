@@ -2,10 +2,8 @@ import { error } from "@sveltejs/kit";
 import { writable } from "svelte/store";
 
 
-
 //Creates a Svelte Store for managing the emotion sub-pages 
 export const currentEmotion = writable(0);
-
 
 
 /**
