@@ -2,11 +2,11 @@ import { writable } from 'svelte/store';
 
 export let conversation = false;
 
-export function changeConversation(){
-  if (conversation == false){
+export function changeConversation() {
+  if (conversation == false) {
     conversation = true;
   }
-  else{
+  else {
     conversation = false;
   }
   console.log(conversation);
@@ -40,7 +40,7 @@ export function doBlinking(interval = 5000, duration = 200) {
 
 //TODO: Getting it to work
 
-export function doSpeaking(interval = 500, duration = 200) {
+/**export function doSpeaking(interval = 500, duration = 200) {
   const isSpeaking = writable(false);
 
   function setupSpeaking() {
@@ -51,7 +51,7 @@ export function doSpeaking(interval = 500, duration = 200) {
       }, duration);
     };
 
-    const speakInterval = setInterval(speach, interval);
+    const speakInterval = setInterval(speach, interval);Ks
 
     return () => {
       clearInterval(speakInterval);
@@ -59,4 +59,16 @@ export function doSpeaking(interval = 500, duration = 200) {
   }
 
   return { isSpeaking, setupSpeaking };
+}**/
+
+export  const isSpeaking = writable(false);
+
+export function doSpeaking() {
+
+  changeConversation();
+  if (conversation) {
+      isSpeaking.set(true);
+  } else {
+      isSpeaking.set(false);
+  }
 }

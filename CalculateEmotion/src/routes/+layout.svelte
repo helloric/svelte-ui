@@ -10,6 +10,7 @@
   import Happy from "./happy/+page.svelte";
   import Sad from "./sad/+page.svelte";
   import Worried from "./worried/+page.svelte";
+  import { doSpeaking } from "$lib/faceanimation";
   import { changeConversation } from "$lib/faceanimation";
 
   //Calculates current Emotion and sets the Svelte Store to the needed index
@@ -63,6 +64,6 @@ TODO: Mabye change to switch statement-->
 
 <slot />
 
-<button type="button" on:click={changeConversation}>
+<button type="button" on:click={doSpeaking}>
   Speaking On/Off
 </button>
