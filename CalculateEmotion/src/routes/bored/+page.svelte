@@ -11,14 +11,10 @@
 
     const { isBlinking, setupBlinking } = doBlinking();
 
-
-
     onMount(() => {
         const cleanupBlink = setupBlinking();
-        //const cleanupSpeak = setupSpeaking();
         return () => {
             cleanupBlink();
-            //cleanupSpeak();
         };
     });
 </script>

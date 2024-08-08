@@ -1,17 +1,5 @@
 import { writable } from 'svelte/store';
 
-export let conversation = false;
-
-export function changeConversation() {
-  if (conversation == false) {
-    conversation = true;
-  }
-  else {
-    conversation = false;
-  }
-  console.log(conversation);
-}
-
 //let interval = Math.floor(Math.random()*10001);
 
 //Does the initial blinking by setting up a svelteStore with a boolean. Alters said boolean with a timer.
@@ -37,13 +25,34 @@ export function doBlinking(interval = 5000, duration = 200) {
 }
 
 
+export let conversation = false;
 
-//TODO: Getting it to work
+export function changeState() {
+  if (conversation == false) {
+    conversation = true;
+  }
+  else {
+    conversation = false;
+  }
 
-/**export function doSpeaking(interval = 500, duration = 200) {
-  const isSpeaking = writable(false);
+  console.log(conversation);
+}
 
-  function setupSpeaking() {
+//Speaking activating with buttonpress
+
+export const isSpeaking = writable(false);
+/**
+ * @type {number | null | undefined}
+ */
+let speakInterval;
+let duration = 200;
+let interval = 450; 
+
+export function doSpeaking() {
+
+  changeState();
+
+  if (conversation) {
     const speach = () => {
       isSpeaking.set(true);
       setTimeout(() => {
@@ -51,24 +60,17 @@ export function doBlinking(interval = 5000, duration = 200) {
       }, duration);
     };
 
-    const speakInterval = setInterval(speach, interval);Ks
+    if (!speakInterval) { // Only start new interval when no other is currently running
+      speakInterval = setInterval(speach, interval);
+    }
 
-    return () => {
-      clearInterval(speakInterval);
-    };
   }
+  else {
+    isSpeaking.set(false);
 
-  return { isSpeaking, setupSpeaking };
-}**/
-
-export  const isSpeaking = writable(false);
-
-export function doSpeaking() {
-
-  changeConversation();
-  if (conversation) {
-      isSpeaking.set(true);
-  } else {
-      isSpeaking.set(false);
+    if (speakInterval) { // Stop interval if one exists
+      clearInterval(speakInterval);
+      speakInterval = null; // Reset timer variable
+    }
   }
 }

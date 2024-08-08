@@ -3,6 +3,8 @@
     import base from "$lib/assets/base.svg";
     import eye from "$lib/assets/eye_excited.svg";
     import mouth from "$lib/assets/mouth_excited.svg";
+    import speakingMouth from "$lib/assets/mouth_sleeping.svg";
+    import { isSpeaking } from "$lib/faceanimation";
 </script>
 
 <h1>RICBOT is excited</h1>
@@ -11,5 +13,9 @@
     <img src={base} alt="" class="base" />
     <img src={eye} alt="" class="eyeL" />
     <img src={eye} alt="" class="eyeR" />
-    <img src={mouth} alt="" class="mouth" />
+    {#if $isSpeaking}
+        <img src={speakingMouth} alt="" class="mouth" />
+    {:else}
+        <img src={mouth} alt="" class="mouth" />
+    {/if}
 </div>

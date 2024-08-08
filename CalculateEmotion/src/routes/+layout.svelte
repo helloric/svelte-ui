@@ -11,10 +11,9 @@
   import Sad from "./sad/+page.svelte";
   import Worried from "./worried/+page.svelte";
   import { doSpeaking } from "$lib/faceanimation";
-  import { changeConversation } from "$lib/faceanimation";
 
   //Calculates current Emotion and sets the Svelte Store to the needed index
-  setEmotion(1);
+  setEmotion(2);
   //calculateEmotion();
 
   /**
