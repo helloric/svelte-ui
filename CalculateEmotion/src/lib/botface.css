@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: #0e141e;
 }
 .faceContainter {
     width: 100%;
@@ -24,9 +24,9 @@ body {
 }
 
 .faceContainter .eyeL path {
-    stroke: rgb(66, 19, 197);
+    fill: rgb(66, 19, 197) !important;
+    stroke: rgb(66, 19, 197) !important;
 }
-
 
 .faceContainter .eyeR svg{
     -webkit-transform: scaleX(-1);
@@ -41,7 +41,8 @@ body {
 }
 
 .faceContainter .eyeR path {
-    stroke: rgb(66, 19, 197);
+    fill: rgb(66, 19, 197) !important;
+    stroke: rgb(66, 19, 197);   
 }
 
 .faceContainter .mouth svg{

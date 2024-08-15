@@ -13,7 +13,7 @@
   import { doSpeaking } from "$lib/faceanimation";
 
   //Calculates current Emotion and sets the Svelte Store to the needed index
-  setEmotion(7);
+  setEmotion(5);
   //calculateEmotion();
 
   /**
@@ -54,12 +54,6 @@ TODO: Mabye change to switch statement-->
 {:else}
   <p>Emotion not found</p>
 {/if}
-
-<!--- Mabye for later
-<style>
- *{background-color: black}
-</style>
---->
 
 <slot />
 
