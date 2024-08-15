@@ -1,10 +1,10 @@
 <script>
     import "$lib/botface.css";
     import base from "$lib/assets/base.svg";
-    import eye from "$lib/assets/eye_calm.svg";
-    import mouth from "$lib/assets/mouth_calm.svg";
-    import closedEye from "$lib/assets/eye_sleeping.svg";
-    import speakingMouth from "$lib/assets/mouth_sleeping.svg";
+    import eye from "$lib/assets/eye_calm.svg?raw";
+    import mouth from "$lib/assets/mouth_calm.svg?raw";
+    import closedEye from "$lib/assets/eye_sleeping.svg?raw";
+    import speakingMouth from "$lib/assets/mouth_sleeping.svg?raw";
     import { doBlinking } from "$lib/faceanimation";
     import { isSpeaking } from "$lib/faceanimation";
     import { onMount } from "svelte";
@@ -23,20 +23,32 @@
     <img src={base} alt="" class="base" />
 
     {#if $isBlinking}
-        <img src={closedEye} alt="" class="eyeR" />
+        <div class="eyeR">
+            {@html closedEye}
+        </div>
     {:else}
-        <img src={eye} alt="" class="eyeR" />
+        <div class="eyeR">
+            {@html eye}
+        </div>
     {/if}
 
     {#if $isBlinking}
-        <img src={closedEye} alt="" class="eyeL" />
+        <div class="eyeL">
+            {@html closedEye}
+        </div>
     {:else}
-        <img src={eye} alt="" class="eyeL" />
+        <div class="eyeL">
+            {@html eye}
+        </div>
     {/if}
 
     {#if $isSpeaking}
-        <img src={speakingMouth} alt="" class="mouth" />
+        <div class="speakingMouth">
+            {@html speakingMouth}
+        </div>
     {:else}
-        <img src={mouth} alt="" class="mouth" />
+        <div class="mouth">
+            {@html mouth}
+        </div>
     {/if}
 </div>
