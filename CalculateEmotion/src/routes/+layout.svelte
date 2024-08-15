@@ -13,7 +13,7 @@
   import { doSpeaking } from "$lib/faceanimation";
 
   //Calculates current Emotion and sets the Svelte Store to the needed index
-  setEmotion(0);
+  setEmotion(1);
   //calculateEmotion();
 
   /**

@@ -1,14 +1,18 @@
+
+
 .faceContainter {
-    width: 50%;
+    width: 100%;
+    height: 1000%;
     position: relative;
     margin: 0, auto;
 }
 
-.faceContainter .base {
+.faceContainter .base{
     width: 100%;
 }
 
-.faceContainter .eyeL {
+
+.faceContainter .eyeL svg{
     position: absolute;
     top: 0;
     bottom: 30%;
@@ -18,7 +22,12 @@
     width: 14.6%;
 }
 
-.faceContainter .eyeR {
+.faceContainter .eyeL path {
+    stroke: rgb(66, 19, 197);
+}
+
+
+.faceContainter .eyeR svg{
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
     position: absolute;
@@ -30,7 +39,11 @@
     width: 14.6%;
 }
 
-.mouth {
+.faceContainter .eyeR path {
+    stroke: rgb(66, 19, 197);
+}
+
+.faceContainter .mouth svg{
     position: absolute;
     top: 0;
     bottom: -30%;
@@ -38,4 +51,23 @@
     right: 0;
     margin: auto;
     width: 56%;
+}
+
+.faceContainter .speakingMouth svg{
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
+}
+
+.faceContainter .mouth path {
+    fill: rgb(66, 19, 197);
+}
+
+.faceContainter .speakingMouth ellipse {
+    stroke: rgb(66, 19, 197);
+    fill: rgb(66, 19, 197);
 }
