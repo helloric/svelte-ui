@@ -1,6 +1,20 @@
-body {
-    background-color: #0e141e;
+/***
+.faceContainter .speakingMouth svg{
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
 }
+
+.faceContainter .speakingMouth ellipse {
+    stroke: rgb(66, 19, 197);
+    fill: rgb(66, 19, 197);
+}
+****/
+
 .faceContainter {
     width: 100%;
     height: 1000%;
@@ -8,10 +22,9 @@ body {
     margin: 0, auto;
 }
 
-.faceContainter .base{
+.faceContainter .base svg{
     width: 100%;
 }
-
 
 .faceContainter .eyeL svg{
     position: absolute;
@@ -21,11 +34,6 @@ body {
     right: 40%;
     margin: auto;
     width: 14.6%;
-}
-
-.faceContainter .eyeL path {
-    fill: rgb(66, 19, 197) !important;
-    stroke: rgb(66, 19, 197) !important;
 }
 
 .faceContainter .eyeR svg{
@@ -40,11 +48,6 @@ body {
     width: 14.6%;
 }
 
-.faceContainter .eyeR path {
-    fill: rgb(66, 19, 197) !important;
-    stroke: rgb(66, 19, 197);   
-}
-
 .faceContainter .mouth svg{
     position: absolute;
     top: 0;
@@ -55,21 +58,63 @@ body {
     width: 56%;
 }
 
-.faceContainter .speakingMouth svg{
-    position: absolute;
-    top: 0;
-    bottom: -30%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 56%;
+body {
+    background-color: #0e141e;
+    color: white;
 }
 
-.faceContainter .mouth path {
-    fill: rgb(66, 19, 197);
+.red circle, .red rect, .red.strokefill path {
+    fill: rgb(161, 57, 57);
 }
 
-.faceContainter .speakingMouth ellipse {
-    stroke: rgb(66, 19, 197);
-    fill: rgb(66, 19, 197);
+.red circle, .red path, .red.strokefill path {
+    stroke: rgb(161, 57, 57);
+}
+
+.orange circle, .orange rect, .orange.strokefill path {
+    fill: rgb(255, 122, 14);
+}
+
+.orange circle, .orange path, .orange.strokefill path {
+    stroke: rgb(255, 122, 14);
+}
+
+.yellow circle, .yellow rect, .yellow.strokefill path {
+    fill: rgb(255, 251, 0);
+}
+
+.yellow circle, .yellow path, .yellow.strokefill path {
+    stroke: rgb(255, 251, 0);
+}
+
+.light_green circle, .light_green rect, .light_green.strokefill path {
+    fill: rgb(8, 255, 28);
+}
+
+.light_green circle, .light_green path, .light_green.strokefill path {
+    stroke: rgb(8, 255, 28);
+}
+
+.dark_green circle, .dark_green rect, .dark_green.strokefill path {
+    fill: rgb(50, 148, 58);
+}
+
+.dark_green circle, .dark_green path, .dark_green.strokefill path {
+    stroke: rgb(50, 148, 58);
+}
+
+.dark_blue circle, .dark_blue rect, .dark_blue.strokefill path {
+    fill: rgb(32, 29, 255);
+}
+
+.dark_blue circle, .dark_blue path, .dark_blue.strokefill path {
+    stroke: rgb(32, 29, 255);
+}
+
+.grey circle, .grey rect, .grey.strokefill path {
+    fill: rgb(129, 129, 129);
+}
+
+.grey circle, .grey path, .grey.strokefill path {
+    stroke: rgb(129, 129, 129);
 }

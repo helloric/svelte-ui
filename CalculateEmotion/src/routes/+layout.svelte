@@ -11,9 +11,16 @@
   import Sad from "./sad/+page.svelte";
   import Worried from "./worried/+page.svelte";
   import { doSpeaking } from "$lib/faceanimation";
+  import BotFace from "$lib/components/botface.svelte";
+
+  const emotions = ["amused", "bored", "calm", "excited", "frustrated", "happy", "sad", "worried"];
+  let emotion = emotions[0];
+
+  const colors = ["red", "orange", "yellow", "light_green","dark_green", "ligth blue", "dark_blue", "grey"];
+  let color = colors[0];
 
   //Calculates current Emotion and sets the Svelte Store to the needed index
-  setEmotion(5);
+  //setEmotion(5);
   //calculateEmotion();
 
   /**
@@ -30,11 +37,30 @@
       unsubscribe();
     };
   });
-
 </script>
 
 <!--Displays current emotion
 TODO: Mabye change to switch statement-->
+<BotFace bind:emotion={emotion} bind:color={color} />
+
+<select bind:value={emotion}>
+  {#each emotions as emo}
+    <option value={emo}>{emo}</option>
+  {/each}
+</select>
+
+<select bind:value={color}>
+  {#each colors as col}
+    <option value={col}>{col}</option>
+  {/each}
+</select>
+
+
+<slot />
+
+<button type="button" on:click={doSpeaking}> Speaking On/Off </button>
+
+<!---
 {#if storeIndex === 0}
   <Amused />
 {:else if storeIndex === 1}
@@ -53,10 +79,4 @@ TODO: Mabye change to switch statement-->
   <Worried />
 {:else}
   <p>Emotion not found</p>
-{/if}
-
-<slot />
-
-<button type="button" on:click={doSpeaking}>
-  Speaking On/Off
-</button>
+{/if} -->
