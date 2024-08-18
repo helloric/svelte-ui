@@ -58,6 +58,17 @@
     width: 56%;
 }
 
+.faceContainter .speakingMouth svg{
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
+}
+
+
 body {
     background-color: #0e141e;
     color: white;

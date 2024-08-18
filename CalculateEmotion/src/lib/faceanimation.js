@@ -16,11 +16,11 @@ export function doBlinking(interval = 5000, duration = 200) {
 
     const blinkInterval = setInterval(blink, interval);
 
+
     return () => {
       clearInterval(blinkInterval);
     };
   }
-
   return { isBlinking, setupBlinking };
 }
 

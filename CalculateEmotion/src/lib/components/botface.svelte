@@ -24,66 +24,71 @@
     import { isSpeaking } from "$lib/faceanimation";
 
     import { onMount } from "svelte";
-    import { writable } from "svelte/store";
 
     let eyeL;
     let eyeR;
     let mouth;
-    let skill; 
 
     export let color = 'yellow';
     export let baseColor = 'blue';
 
     let mouth_class = '';
     let eye_class = '';
-    let blinking = true; 
 
     export let emotion = 'amused';
 
-    $: {
-        robotFace(emotion)
-       // startTimer()
-    }
-
-
-    //NOT WORKING
     const { isBlinking, setupBlinking } = doBlinking();
 
-    function startTimer(){
-        const cleanup = setupBlinking();
-        return cleanup;
+   
+    let cleanupBlink;
+
+    onMount(() => {
+        updateBlinking();
+        return () => {
+            if (cleanupBlink) cleanupBlink();
+        };
+    });
+
+    $: {
+        updateBlinking();
+        if ($isBlinking) {
+            eyeR = eyeL = eye_blinking;
+        } else {
+            robotFace(emotion);
+        }
+        console.log("Blinking state:", $isBlinking);
+        console.log("Speaking state:", $isSpeaking);
+
+        if ($isSpeaking) {
+            mouth = mouth_speaking;
+        }
     }
 
-    console.log(isBlinking);
+    function updateBlinking() {
+        if (emotion === 'amused' || emotion === 'excited') {
+            if (cleanupBlink) cleanupBlink();
+        } else {
+            if (cleanupBlink) cleanupBlink();
+            cleanupBlink = setupBlinking();
+        }
+    }
 
     function robotFace(emotion) {
         const options = {
             amused: {eye: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: ''},
-            bored: {eye: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill', skill: blinking},
-            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: 'stroke', eye_class: 'strokefill', skill: blinking},
+            bored: {eye: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill'},
+            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: 'stroke', eye_class: 'strokefill'},
             excited: {eye: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: ''},
-            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: 'stroke',  eye_class: 'strokefill', skill: blinking},
-            happy: {eye: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill', skill: blinking},
-            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: 'stroke', eye_class: 'strokefill', skill: blinking},
-            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: 'stroke', eye_class:'strokefill', skill: blinking}
+            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: 'stroke',  eye_class: 'strokefill'},
+            happy: {eye: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill'},
+            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: 'stroke', eye_class: 'strokefill'},
+            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: 'stroke', eye_class:'strokefill'}
         }
         eyeR = eyeL = options[emotion]['eye'];
         mouth = options[emotion]['mouth'];
         mouth_class = options[emotion]['mouth_class'];
         eye_class = options[emotion]['eye_class']
-
-
-        //TODO: Fixing
-        if (skill == blinking) {
-            if (isBlinking) {
-                eyeR = eyeL = eye_blinking;
-            }
-            else{
-                eyeR = eyeL = options[emotion]['eye'];
-            }
-        }
     }
-
 </script>
 
 <h1>RICBOT is excited</h1>
