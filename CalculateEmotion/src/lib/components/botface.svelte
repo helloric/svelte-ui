@@ -28,66 +28,56 @@
     let eyeL;
     let eyeR;
     let mouth;
-
-    export let color = 'yellow';
-    export let baseColor = 'blue';
-
+    let blinking;
     let mouth_class = '';
     let eye_class = '';
+
+    export let color = '';
+    export let baseColor = 'blue';
 
     export let emotion = 'amused';
 
     const { isBlinking, setupBlinking } = doBlinking();
 
-   
-    let cleanupBlink;
-
     onMount(() => {
-        updateBlinking();
-        return () => {
-            if (cleanupBlink) cleanupBlink();
-        };
+        const cleanup = setupBlinking();
+        return cleanup;
+
     });
 
     $: {
-        updateBlinking();
-        if ($isBlinking) {
+        robotFace(emotion);
+        if ($isBlinking && blinking) {
+            eye_class = 'stroke';
             eyeR = eyeL = eye_blinking;
         } else {
-            robotFace(emotion);
+           
         }
         console.log("Blinking state:", $isBlinking);
         console.log("Speaking state:", $isSpeaking);
 
         if ($isSpeaking) {
+            mouth_class = 'strokefill'
             mouth = mouth_speaking;
-        }
-    }
-
-    function updateBlinking() {
-        if (emotion === 'amused' || emotion === 'excited') {
-            if (cleanupBlink) cleanupBlink();
-        } else {
-            if (cleanupBlink) cleanupBlink();
-            cleanupBlink = setupBlinking();
         }
     }
 
     function robotFace(emotion) {
         const options = {
-            amused: {eye: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: ''},
-            bored: {eye: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill'},
-            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: 'stroke', eye_class: 'strokefill'},
-            excited: {eye: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: ''},
-            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: 'stroke',  eye_class: 'strokefill'},
-            happy: {eye: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill'},
-            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: 'stroke', eye_class: 'strokefill'},
-            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: 'stroke', eye_class:'strokefill'}
+            amused: {eye: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: '', blinking: false},
+            bored: {eye: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true},
+            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: 'stroke', eye_class: 'strokefill', blinking: true},
+            excited: {eye: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: '', blinking: false},
+            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: 'stroke',  eye_class: 'strokefill', blinking: true},
+            happy: {eye: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true},
+            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: 'stroke', eye_class: 'strokefill', blinking: true},
+            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: 'stroke', eye_class:'strokefill', blinking: true},
         }
         eyeR = eyeL = options[emotion]['eye'];
         mouth = options[emotion]['mouth'];
         mouth_class = options[emotion]['mouth_class'];
-        eye_class = options[emotion]['eye_class']
+        eye_class = options[emotion]['eye_class'];
+        blinking = options[emotion]['blinking'];
     }
 </script>
 

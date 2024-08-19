@@ -1,20 +1,3 @@
-/***
-.faceContainter .speakingMouth svg{
-    position: absolute;
-    top: 0;
-    bottom: -30%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 56%;
-}
-
-.faceContainter .speakingMouth ellipse {
-    stroke: rgb(66, 19, 197);
-    fill: rgb(66, 19, 197);
-}
-****/
-
 .faceContainter {
     width: 100%;
     height: 1000%;
@@ -68,64 +51,109 @@
     width: 56%;
 }
 
+:root{
+    --red: rgb(161, 57, 57);
+    --orange: rgb(255, 122, 14);
+    --yellow: rgb(255, 251, 0);
+    --ligthGreen: rgb(8, 255, 28);
+    --darkGreen: rgb(50, 148, 58);
+    --darkBlue: rgb(32, 29, 255);
+    --grey: rgb(129, 129, 129);
+    --baseColor: #0e141e;
+}
 
 body {
-    background-color: #0e141e;
+    background-color: var(--baseColor);
     color: white;
 }
 
 .red circle, .red rect, .red.strokefill path {
-    fill: rgb(161, 57, 57);
+    fill: var(--red);
 }
 
 .red circle, .red path, .red.strokefill path {
-    stroke: rgb(161, 57, 57);
+    stroke: var(--red);
+}
+
+.red ellipse, .red rect, .red.strokefill path {
+    fill: var(--red);
+    stroke: var(--red);
 }
 
 .orange circle, .orange rect, .orange.strokefill path {
-    fill: rgb(255, 122, 14);
+    fill: var(--orange);
 }
 
 .orange circle, .orange path, .orange.strokefill path {
-    stroke: rgb(255, 122, 14);
+    stroke: var(--orange);
+}
+
+.orange ellipse, .orange rect, .orange.strokefill path {
+    fill: var(--orange);
+    stroke: var(--orange);
 }
 
 .yellow circle, .yellow rect, .yellow.strokefill path {
-    fill: rgb(255, 251, 0);
+    fill: var(--yellow);
 }
 
 .yellow circle, .yellow path, .yellow.strokefill path {
-    stroke: rgb(255, 251, 0);
+    stroke: var(--yellow);
+}
+
+.yellow ellipse, .yellow rect, .yellow.strokefill path {
+    stroke: var(--yellow);
+    fill: var(--yellow);
 }
 
 .light_green circle, .light_green rect, .light_green.strokefill path {
-    fill: rgb(8, 255, 28);
+    fill: var(--ligthGreen);
 }
 
 .light_green circle, .light_green path, .light_green.strokefill path {
-    stroke: rgb(8, 255, 28);
+    stroke: var(--ligthGreen);
+}
+
+.light_green ellipse, .light_green rect, .light_green.strokefill path {
+    stroke: var(--ligthGreen);
+    fill: var(--ligthGreen);
 }
 
 .dark_green circle, .dark_green rect, .dark_green.strokefill path {
-    fill: rgb(50, 148, 58);
+    fill: var(--darkGreen);
 }
 
 .dark_green circle, .dark_green path, .dark_green.strokefill path {
-    stroke: rgb(50, 148, 58);
+    stroke: var(--darkGreen);
+}
+
+.dark_green ellipse, .dark_green rect, .dark_green.strokefill path {
+    stroke: var(--darkGreen);
+    fill: var(--darkGreen);
 }
 
 .dark_blue circle, .dark_blue rect, .dark_blue.strokefill path {
-    fill: rgb(32, 29, 255);
+    fill: var(--darkBlue);
 }
 
 .dark_blue circle, .dark_blue path, .dark_blue.strokefill path {
-    stroke: rgb(32, 29, 255);
+    stroke: var(--darkBlue);
+}
+
+.dark_blue ellipse, .dark_blue rect, .dark_blue.strokefill path {
+    stroke: var(--darkBlue);
+    fill: var(--darkBlue);
 }
 
 .grey circle, .grey rect, .grey.strokefill path {
-    fill: rgb(129, 129, 129);
+    fill: var(--grey);
 }
 
 .grey circle, .grey path, .grey.strokefill path {
-    stroke: rgb(129, 129, 129);
+    stroke: var(--grey);
+}
+
+.grey ellipse, .grey rect, .grey.strokefill path {
+    stroke: var(--grey);
+    fill: var(--grey);
 }
