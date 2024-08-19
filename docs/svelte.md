@@ -1,3 +1,4 @@
+# WORK IN PROGRESS
 # SvelteKit
 
 The webframework SvelteKit wad used for programming the emotions of RICBOT. 

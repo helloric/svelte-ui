@@ -3,10 +3,14 @@ site_url: http://127.0.0.1:8000/
 nav:
   - Overview:
     - Framework: svelte.md
-    - Getting Started: getting-Started.md
-  - Modules:
-    - Emotion Calculating: calculateEmotion.md
-    - Displayed Emotion: shownEmotion.md
+    - Purpose: getting-Started.md
+  - The Code itself:
+    - The assets: assets.md
+    - The botface component: botface.md
+    - The CSS behind: style.md
+    - The animaion: animation.md
+    - The router: router.md
+    - The final Display: routes_folder.md
   #- Messages:
    # - Overview: messages/overview.md
   #- Informations:
