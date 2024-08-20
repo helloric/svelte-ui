@@ -1,35 +1,22 @@
 import { error } from "@sveltejs/kit";
 import { writable } from "svelte/store";
 
-
 //Creates a Svelte Store for managing the emotion sub-pages 
 export const currentEmotion = writable(0);
 
 
-/**
- * @type {number} Saves the Arousal Value
- */
 let arousal = -2;
-/**
- * @type {number} Saves the Valence Value
- */
 let valence = 0;
+export let emotionsNumber = 0;
 
 
-
-/**
- * @param {number} index Is the current value of the Svelte Store, Function uptdates current Store Index
- */
 export function setEmotion(index) {
-  currentEmotion.set(index);
+  emotionsNumber = index;
 }
 
 
 
-/**
- * @param {number} newArousal !!!!!NOT TESTET YET!!!!!
- * @param {number} newValence Should update arousal and valence within the allowed parameters
- */
+//Not testet yet
 export function updateAoursalValence(newArousal, newValence) {
   if (arousal > 3 || arousal < -4) {
     throw new Error("Invalid value for arousal");

@@ -81,9 +81,6 @@
     }
 </script>
 
-<h1>RICBOT is excited</h1>
-
-
 <div class="faceContainter">
     <div class={`base ${baseColor}`}>
         {@html base}

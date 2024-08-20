@@ -41,12 +41,10 @@ export function changeState() {
 //Speaking activating with buttonpress
 
 export const isSpeaking = writable(false);
-/**
- * @type {number | null | undefined}
- */
+
 let speakInterval;
 let duration = 200;
-let interval = 450; 
+let interval = 450;
 
 export function doSpeaking() {
 
