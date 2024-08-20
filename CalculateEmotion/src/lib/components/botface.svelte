@@ -42,7 +42,6 @@
     onMount(() => {
         const cleanup = setupBlinking();
         return cleanup;
-
     });
 
     $: {
@@ -50,8 +49,6 @@
         if ($isBlinking && blinking) {
             eye_class = 'stroke';
             eyeR = eyeL = eye_blinking;
-        } else {
-           
         }
         console.log("Blinking state:", $isBlinking);
         console.log("Speaking state:", $isSpeaking);
