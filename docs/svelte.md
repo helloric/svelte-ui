@@ -7,6 +7,21 @@ HTML, CSS and Javascript can be used.
 
 SvelteKit looks overwelming at first, but is quite simple and easy to use when you know about it's pequliarities.
 
+## Installation and start
+SvelteKit has to be installed for each individual project. Like I said, it's a framework and no programming language. After loading the repository for the emotion system you need to type the following commants in the terminal:
+
+```
+npm install
+```
+This sould be enouth to install all the dependencys SvelteKit needs to operate.
+
+Do this to run the system inside the repository: 
+
+```
+cd CalculateEmotion
+npm run dev
+```
+..........................
 ## So many folders ???
 Relax, you only have to use a fracion of the displayed folders and components.
 
