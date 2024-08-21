@@ -67,93 +67,65 @@ body {
     color: white;
 }
 
-.red circle, .red rect, .red.strokefill path {
-    fill: var(--red);
-}
-
-.red circle, .red path, .red.strokefill path {
+.red path {
     stroke: var(--red);
 }
 
-.red ellipse, .red rect, .red.strokefill path {
+.red circle, .red ellipse, .red rect, .red.strokefill path {
     fill: var(--red);
     stroke: var(--red);
 }
 
-.orange circle, .orange rect, .orange.strokefill path {
-    fill: var(--orange);
-}
-
-.orange circle, .orange path, .orange.strokefill path {
+.orange path {
     stroke: var(--orange);
 }
 
-.orange ellipse, .orange rect, .orange.strokefill path {
+.orange circle, .orange ellipse, .orange rect, .orange.strokefill path {
     fill: var(--orange);
     stroke: var(--orange);
 }
 
-.yellow circle, .yellow rect, .yellow.strokefill path {
-    fill: var(--yellow);
-}
-
-.yellow circle, .yellow path, .yellow.strokefill path {
+.yellow path {
     stroke: var(--yellow);
 }
 
-.yellow ellipse, .yellow rect, .yellow.strokefill path {
+.yellow circle, .yellow ellipse, .yellow rect, .yellow.strokefill path {
     stroke: var(--yellow);
     fill: var(--yellow);
 }
 
-.light_green circle, .light_green rect, .light_green.strokefill path {
-    fill: var(--ligthGreen);
-}
-
-.light_green circle, .light_green path, .light_green.strokefill path {
+.light_green path {
     stroke: var(--ligthGreen);
 }
 
-.light_green ellipse, .light_green rect, .light_green.strokefill path {
+.light_green circle, .light_green ellipse, .light_green rect, .light_green.strokefill path {
     stroke: var(--ligthGreen);
     fill: var(--ligthGreen);
 }
 
-.dark_green circle, .dark_green rect, .dark_green.strokefill path {
-    fill: var(--darkGreen);
-}
-
-.dark_green circle, .dark_green path, .dark_green.strokefill path {
+.dark_green path {
     stroke: var(--darkGreen);
 }
 
-.dark_green ellipse, .dark_green rect, .dark_green.strokefill path {
+.dark_green circle, .dark_green ellipse, .dark_green rect, .dark_green.strokefill path {
     stroke: var(--darkGreen);
     fill: var(--darkGreen);
 }
 
-.dark_blue circle, .dark_blue rect, .dark_blue.strokefill path {
-    fill: var(--darkBlue);
-}
-
-.dark_blue circle, .dark_blue path, .dark_blue.strokefill path {
+.dark_blue path {
     stroke: var(--darkBlue);
 }
 
-.dark_blue ellipse, .dark_blue rect, .dark_blue.strokefill path {
+.dark_blue circle, .dark_blue ellipse, .dark_blue rect, .dark_blue.strokefill path {
     stroke: var(--darkBlue);
     fill: var(--darkBlue);
 }
 
-.grey circle, .grey rect, .grey.strokefill path {
-    fill: var(--grey);
-}
-
-.grey circle, .grey path, .grey.strokefill path {
+.grey path {
     stroke: var(--grey);
 }
 
-.grey ellipse, .grey rect, .grey.strokefill path {
+.grey circle, .grey ellipse, .grey rect, .grey.strokefill path {
     stroke: var(--grey);
     fill: var(--grey);
 }

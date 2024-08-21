@@ -33,7 +33,7 @@
     let eye_class = '';
 
     export let color = '';
-    export let baseColor = 'blue';
+    export let baseColor = '';
 
     export let emotion = 'amused';
 
@@ -47,7 +47,7 @@
     $: {
         robotFace(emotion);
         if ($isBlinking && blinking) {
-            eye_class = 'stroke';
+            eye_class = '';
             eyeR = eyeL = eye_blinking;
         }
         console.log("Blinking state:", $isBlinking);
@@ -63,12 +63,12 @@
         const options = {
             amused: {eye: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: '', blinking: false},
             bored: {eye: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true},
-            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: 'stroke', eye_class: 'strokefill', blinking: true},
+            calm: {eye: eye_calm, mouth: mouth_calm, mouth_class: '', eye_class: 'strokefill', blinking: true},
             excited: {eye: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: '', blinking: false},
-            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: 'stroke',  eye_class: 'strokefill', blinking: true},
+            frustrated: {eye: eye_frustrated, mouth: mouth_frustrated, mouth_class: '',  eye_class: 'strokefill', blinking: true},
             happy: {eye: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true},
-            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: 'stroke', eye_class: 'strokefill', blinking: true},
-            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: 'stroke', eye_class:'strokefill', blinking: true},
+            sad: {eye: eye_sad, mouth: mouth_sad, mouth_class: '', eye_class: 'strokefill', blinking: true},
+            worried: {eye: eye_worried, mouth: mouth_worried, mouth_class: '', eye_class:'strokefill', blinking: true},
         }
         eyeR = eyeL = options[emotion]['eye'];
         mouth = options[emotion]['mouth'];
