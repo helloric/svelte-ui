@@ -11,7 +11,7 @@
   
     //calculateEmotion();
     //setEmotion(0);
-    let emotion = emotions[emotionsNumber];
+    export let emotion = emotions[emotionsNumber];
   
   </script>
   

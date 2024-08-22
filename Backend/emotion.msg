@@ -1,0 +1,2 @@
+Int8 emotion
+bool social_context
