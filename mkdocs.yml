@@ -4,6 +4,7 @@ nav:
   - Overview:
     - Framework: svelte.md
     - Purpose: getting-Started.md
+    - The communication with LLM: backend.md
   - The Code itself:
     - The assets: assets.md
     - The botface component: botface.md
