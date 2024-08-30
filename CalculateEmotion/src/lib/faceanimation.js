@@ -38,6 +38,11 @@ export function changeState() {
   console.log(conversation);
 }
 
+export function setSpeakingState(speaking){
+  conversation = speaking; 
+  doSpeaking();
+}
+
 //Speaking activating with buttonpress
 
 export const isSpeaking = writable(false);
@@ -47,8 +52,6 @@ let duration = 200;
 let interval = 450;
 
 export function doSpeaking() {
-
-  changeState();
 
   if (conversation) {
     const speach = () => {
