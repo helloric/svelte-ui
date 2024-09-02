@@ -28,19 +28,9 @@ export function doBlinking(interval = 5000, duration = 200) {
 export let conversation = false;
 
 export function changeState() {
-  if (conversation == false) {
-    conversation = true;
-  }
-  else {
-    conversation = false;
-  }
+  conversation = !conversation;
 
-  console.log(conversation);
-}
-
-export function setSpeakingState(speaking){
-  conversation = speaking; 
-  doSpeaking();
+  //console.log(conversation);
 }
 
 //Speaking activating with buttonpress
@@ -51,7 +41,12 @@ let speakInterval;
 let duration = 200;
 let interval = 450;
 
-export function doSpeaking() {
+export function doSpeaking(speak) {
+  if (speak === undefined) {
+    changeState();
+  } else {
+    conversation = speak;
+  }
 
   if (conversation) {
     const speach = () => {

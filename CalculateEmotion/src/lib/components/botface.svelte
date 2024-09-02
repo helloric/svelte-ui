@@ -22,6 +22,7 @@
 
     import { doBlinking } from "$lib/faceanimation";
     import { isSpeaking } from "$lib/faceanimation";
+    import { doSpeaking } from "$lib/faceanimation";
 
     import { onMount } from "svelte";
 
@@ -36,6 +37,7 @@
     export let baseColor = '';
 
     export let emotion = 'amused';
+    export let speaking = false;
 
     const { isBlinking, setupBlinking } = doBlinking();
 
@@ -50,13 +52,14 @@
             eye_class = '';
             eyeR = eyeL = eye_blinking;
         }
-        console.log("Blinking state:", $isBlinking);
-        console.log("Speaking state:", $isSpeaking);
+        //console.log("Blinking state:", $isBlinking);
+        //console.log("Speaking state:", $isSpeaking);
 
         if ($isSpeaking) {
             mouth_class = 'strokefill'
             mouth = mouth_speaking;
         }
+        doSpeaking(speaking);
     }
 
     function robotFace(emotion) {
