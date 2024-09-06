@@ -4,7 +4,7 @@
     import { emotionsNumber } from "$lib/router.js";
     import { onMount } from "svelte";
   
-    const emotions = ["amused", "bored", "calm", "excited", "frustrated", "happy", "sad", "worried"];
+    const emotions = ["amused", "bored", "calm", "excited", "frustrated", "happy", "sad", "worried", "thinking"];
   
     const colors = ["red", "orange", "yellow", "light_green","dark_green", "ligth blue", "dark_blue", "grey"];
     let color = colors[0];
