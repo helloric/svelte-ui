@@ -14,6 +14,7 @@
     export let emotion = emotions[emotionsNumber];
 
   import { writable } from 'svelte/store';
+    import { conversation } from "$lib/faceanimation";
   let wsConnected = false;
   let ws;
   let speaking = false;
