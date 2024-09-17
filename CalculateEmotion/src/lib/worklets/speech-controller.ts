@@ -43,7 +43,6 @@ class SpeechController extends AudioWorkletProcessor {
 
         switch (this.microphoneState) {
             case 0:
-                console.log(this.decibelThreshold);
                 if (measurement[1] >= this.decibelThreshold) {
                     this.frames = Float32Array.of(...this.frames, ...measurement[0]);
                     this.microphoneState = 1;
@@ -53,12 +52,12 @@ class SpeechController extends AudioWorkletProcessor {
                 this.frames = Float32Array.of(...this.frames, ...measurement[0]);
                 if (measurement[1] < this.decibelThreshold) {
                     this.idle_frames = Float32Array.of(...this.idle_frames, ...measurement[0]);
-                    console.log(this.idle_frames.length);
-                    if (this.idle_frames.length >= this.getFrameSeconds(100)) {
-                        console.log('HI');
+                    if (this.idle_frames.length >= this.getFrameSeconds(2)) {
                         outputs[0] = this.frames;
                         this.send();
                     }
+                } else {
+                    this.idle_frames = Float32Array.of();
                 }
         }
 
@@ -73,7 +72,7 @@ class SpeechController extends AudioWorkletProcessor {
     }
 
     getFrameSeconds(seconds: number) {
-        return Math.round(this.sampleRate / 128 * seconds);
+        return Math.round(this.sampleRate / 8 * seconds);
     }
 
     private measureData = (data: Float32Array) : [Float32Array, number] => {

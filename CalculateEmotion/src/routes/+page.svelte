@@ -3,6 +3,7 @@
   import BotFace from "$lib/components/botface.svelte";
   import { emotionsNumber } from "$lib/router.js";
   import { onMount } from "svelte";
+  import 'audiobuffer-to-wav'
 
   const emotions = [
     "amused",
@@ -35,6 +36,7 @@
   import { writable } from "svelte/store";
   import { AudioManager } from "$lib/audio_manager";
     import { currentDevice, decibelThreshold, updateCurrentDevice, updateDecibelThreshold } from "$lib/storage-util";
+    import audioBufferToWav from "audiobuffer-to-wav";
   let wsConnected = false;
   /**@type WebSocket | undefined */
   let ws;
@@ -76,9 +78,19 @@
         audioManager.audioWorkletNode.port.onmessage = (e) => {
           if (e.data['event'] === 'audio_available') {
             
+            console.log('RECEIVED AUDIO');
+
             /** @type Float32Array */
             let audio = e.data['payload']['audio_data'];
-            let bytes = new Uint8Array(audio.buffer);
+
+
+            let audioBuffer = new AudioBuffer({numberOfChannels: 1, sampleRate: 44100, length: audio.length})
+            audioBuffer.copyToChannel(audio, 0);
+
+            /** @type ArrayBuffer */
+            let buffer = audioBufferToWav(audioBuffer, {float32: true});
+
+            let bytes = new Uint8Array(buffer);
             console.log(bytes);
 
             let binary = "";
@@ -89,7 +101,7 @@
             let b64encoded = btoa(binary);
 
             console.log(b64encoded);
-
+            
             ws?.send(JSON.stringify({audio_data: b64encoded}))
           }
         }
@@ -110,8 +122,17 @@
       }
 
       if (data.audio != undefined) {
-        let audio = new Audio(`data:audio/wav;base64,${data.audio}`)
-        audio.play();
+        if (data.audio === '') {
+          audioManager?.audioWorkletNode?.port.postMessage({'event': 'unblock_microphone'});
+          ws?.send(JSON.stringify({update: true}));
+        } else {
+          let audio = new Audio(`data:audio/wav;base64,${data.audio}`)
+          audio.play();
+          audio.onended = _ => {
+            console.log('Stop');
+            ws?.send(JSON.stringify({update: true}));
+          }
+        }
       }
     };
   }
