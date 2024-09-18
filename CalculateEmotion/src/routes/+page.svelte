@@ -3,7 +3,11 @@
   import BotFace from "$lib/components/botface.svelte";
   import { emotionsNumber } from "$lib/router.js";
   import { onMount } from "svelte";
-  import 'audiobuffer-to-wav'
+  import { writable } from "svelte/store";
+  import { AudioManager } from "$lib/audio_manager";
+  import { currentDevice, decibelThreshold, updateCurrentDevice, updateDecibelThreshold } from "$lib/storage-util";
+  import { conversation } from "$lib/faceanimation";
+  import audioBufferToWav from "audiobuffer-to-wav";
 
   const emotions = [
     "amused",
@@ -33,10 +37,6 @@
   //setEmotion(0);
   export let emotion = emotions[emotionsNumber];
 
-  import { writable } from "svelte/store";
-  import { AudioManager } from "$lib/audio_manager";
-    import { currentDevice, decibelThreshold, updateCurrentDevice, updateDecibelThreshold } from "$lib/storage-util";
-    import audioBufferToWav from "audiobuffer-to-wav";
   let wsConnected = false;
   /**@type WebSocket | undefined */
   let ws;
