@@ -107,7 +107,7 @@
         }
       }
     };
-    ws.onmessage = (event) => {
+    ws.onmessage = async (event) => {
       const data = JSON.parse(event.data);
       console.log(data);
       if (data.emotion != undefined) {
@@ -121,18 +121,39 @@
         speaking = data.speaking;
       }
 
-      if (data.audio != undefined) {
-        if (data.audio === '') {
-          audioManager?.audioWorkletNode?.port.postMessage({'event': 'unblock_microphone'});
-          ws?.send(JSON.stringify({update: true}));
-        } else {
-          let audio = new Audio(`data:audio/wav;base64,${data.audio}`)
-          audio.play();
-          audio.onended = _ => {
-            console.log('Stop');
-            ws?.send(JSON.stringify({update: true}));
+      if (data.messages != undefined && data.release_mic != undefined) {
+        /** @type LLMMessage[] */ 
+        let messages = data.messages
+
+        let play = async (/** @type {number} */ i, /** @type {LLMMessage[]} */ messages) => {
+          if (i >= messages.length) {
+            if (data.release_mic) {
+              console.log('release.');
+              audioManager?.unblockMicrophone();
+            }
+            speaking = false;
+          } else {
+              let msg = messages[i];
+              if (messages[i].emotion === 8) {
+                if (i === messages.length - 1) {
+                  emotion = emotions[msg.emotion];
+                  return;
+                } else {
+                  play(i+1, messages);
+                }
+              } else if (messages[i].is_pause) {
+                await new Promise(r => setTimeout(r, 2000));
+                play(i+1, messages);
+              } else {
+                speaking = true;
+                emotion = emotions[msg.emotion];
+                let audio = new Audio(`data:audio/wav;base64,${msg.b64audio}`)
+                audio.onended = _ => play(i+1, messages);
+                audio.play();
+              }
+            }
           }
-        }
+        await play(0, messages);
       }
     };
   }
@@ -151,7 +172,7 @@
 
     audioManager.audioWorkletNode?.port.postMessage({event: 'update_threshold', payload: {threshold: $decibelThreshold}});
     connect();
-    audioManager.audioWorkletNode?.port.postMessage({event: 'unblock_microphone'}); 
+    audioManager.unblockMicrophone();
   });
 </script>
 

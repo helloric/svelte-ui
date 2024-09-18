@@ -36,4 +36,12 @@ export class AudioManager {
         }
         this.audioWorkletNode.connect(this.context.destination);
     }
+
+    blockMicrophone = () => {
+        this.audioWorkletNode?.port.postMessage({'event': 'block_microphone'})
+    }
+    
+    unblockMicrophone = () => {
+        this.audioWorkletNode?.port.postMessage({'event': 'unblock_microphone'})
+    }
 }
