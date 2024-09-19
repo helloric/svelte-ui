@@ -151,6 +151,7 @@
                   play(i+1, messages);
                 }
               } else if (messages[i].is_pause) {
+                speaking = false;
                 await new Promise(r => setTimeout(r, 2000));
                 play(i+1, messages);
               } else {
