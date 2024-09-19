@@ -80,12 +80,20 @@
             
             console.log('RECEIVED AUDIO');
 
-            /** @type Float32Array */
-            let audio = e.data['payload']['audio_data'];
+            let audioBuffer;
 
-
-            let audioBuffer = new AudioBuffer({numberOfChannels: 1, sampleRate: 44100, length: audio.length})
-            audioBuffer.copyToChannel(audio, 0);
+            if (audioManager?.channelCount == 1) {
+              /** @type Float32Array */
+              let audio = e.data['payload']['audio_data'];
+              audioBuffer = new AudioBuffer({numberOfChannels: audioManager?.channelCount, sampleRate: 44100, length: audio.length})
+              audioBuffer.copyToChannel(audio, 0);
+            } else {
+              /** @type {{'0': Float32Array, '1': Float32Array}} */
+              let audio = e.data['payload']['audio_data'];
+              audioBuffer = new AudioBuffer({numberOfChannels: audioManager?.channelCount, sampleRate: 44100, length: audio['0'].length})
+              audioBuffer.copyToChannel(audio['0'], 0);
+              audioBuffer.copyToChannel(audio['1'], 1);
+            }
 
             /** @type ArrayBuffer */
             let buffer = audioBufferToWav(audioBuffer, {float32: true});

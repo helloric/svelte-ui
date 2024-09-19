@@ -15,6 +15,9 @@ export class AudioManager {
     /** The Speech Controller that'll send/receive data based on a decibel threshold */
     public audioWorkletNode : AudioWorkletNode | undefined
 
+    /** How many channels does the current input have? Won't use more than 2. */
+    public channelCount: 1 | 2 = 1
+
     constructor() {
         this.context = new AudioContext();
     }
@@ -26,8 +29,16 @@ export class AudioManager {
     initMicrophone = async (stream: MediaStream) => {
         updateDecibelThreshold();
         this.audioSource = this.context.createMediaStreamSource(stream);
-        await this.context.audioWorklet.addModule('src/lib/worklets/speech-controller.ts');
-        this.audioWorkletNode = new AudioWorkletNode(this.context, 'speech-controller');
+        this.channelCount = this.audioSource.channelCount > 1 ? 2 : 1
+        let moduleName = ''
+        if (this.audioSource.channelCount > 1) {
+            await this.context.audioWorklet.addModule('src/lib/worklets/speech-controller-dual-channel.ts');
+            moduleName = 'speech-controller-dual-channel';
+        } else {
+            await this.context.audioWorklet.addModule('src/lib/worklets/speech-controller.ts');
+            moduleName = 'speech-controller'
+        }
+        this.audioWorkletNode = new AudioWorkletNode(this.context, moduleName);
         this.audioSource.connect(this.audioWorkletNode);
         this.audioWorkletNode.port.onmessage = e => {
                 if (e.data['event'] === 'update_decibels') {
