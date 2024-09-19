@@ -1,11 +1,8 @@
 import { writable } from 'svelte/store';
 
-//let interval = Math.floor(Math.random()*10001);
-
-//Does the initial blinking by setting up a svelteStore with a boolean. Alters said boolean with a timer.
+//Blinking function
 export function doBlinking(interval = 5000, duration = 200) {
   const isBlinking = writable(false);
-
   function setupBlinking() {
     const blink = () => {
       isBlinking.set(true);
@@ -16,7 +13,6 @@ export function doBlinking(interval = 5000, duration = 200) {
 
     const blinkInterval = setInterval(blink, interval);
 
-
     return () => {
       clearInterval(blinkInterval);
     };
@@ -25,16 +21,16 @@ export function doBlinking(interval = 5000, duration = 200) {
 }
 
 
-export let conversation = false;
 
+//Activates speaking
+export let conversation = false;
 export function changeState() {
   conversation = !conversation;
-
-  //console.log(conversation);
 }
 
-//Speaking activating with buttonpress
 
+
+//Speaking function
 export const isSpeaking = writable(false);
 
 let speakInterval;
@@ -56,17 +52,15 @@ export function doSpeaking(speak) {
       }, duration);
     };
 
-    if (!speakInterval) { // Only start new interval when no other is currently running
+    if (!speakInterval) {
       speakInterval = setInterval(speach, interval);
     }
-
   }
   else {
     isSpeaking.set(false);
-
-    if (speakInterval) { // Stop interval if one exists
+    if (speakInterval) {
       clearInterval(speakInterval);
-      speakInterval = null; // Reset timer variable
+      speakInterval = null;
     }
   }
 }

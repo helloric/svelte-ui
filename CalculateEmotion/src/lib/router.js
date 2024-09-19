@@ -1,14 +1,10 @@
-import { error } from "@sveltejs/kit";
-import { writable } from "svelte/store";
+/*
+This is the currently used part. 
+It allows the LLM to set the current emotion RICBOT is feeling.
+It displays the emotion 'calm' by default
+*/
 
-//Creates a Svelte Store for managing the emotion sub-pages 
-export const currentEmotion = writable(0);
-
-
-let arousal = -2;
-let valence = 0;
-export let emotionsNumber = 0;
-
+export let emotionsNumber = 2;
 
 export function setEmotion(index) {
   emotionsNumber = index;
@@ -16,7 +12,18 @@ export function setEmotion(index) {
 
 
 
-//Not testet yet
+
+
+
+/*
+Everything below this was implemented with the idea of calculating the emotion with arousal and valence in mind which had to be scrapped due to manpower issues. 
+It was left in to mabye be used in future iterations.
+*/
+
+let arousal = -2;
+let valence = 0;
+
+//Update arousal and valence. Called by LLM ideally
 export function updateAoursalValence(newArousal, newValence) {
   if (arousal > 3 || arousal < -4) {
     throw new Error("Invalid value for arousal");
@@ -28,13 +35,8 @@ export function updateAoursalValence(newArousal, newValence) {
     arousal = newArousal;
     valence = newValence;
   }
-
-  //TODO: Testing
 }
 
-
-
-//Mabye usefull in the future, currently unused
 export function getArousal() {
   return arousal;
 }
@@ -42,7 +44,6 @@ export function getArousal() {
 export function getValence() {
   return valence;
 }
-
 
 
 //Calculates the actual emotion based on the arousal and valence values and traverses a switchstatemt to uptade the emotion
