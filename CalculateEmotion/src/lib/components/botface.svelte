@@ -21,9 +21,7 @@
     import mouth_worried from "$lib/assets/mouth_worried.svg?raw";
     import mouth_speaking from "$lib/assets/mouth_sleeping.svg?raw";
     import mouth_thinking from "$lib/assets/mouth_thinking.svg?raw"
-    import { doBlinking } from "$lib/faceanimation";
-    import { isSpeaking } from "$lib/faceanimation";
-    import { doSpeaking } from "$lib/faceanimation";
+    import { doBlinking, isSpeaking, doSpeaking } from "$lib/faceanimation";
     import { onMount } from "svelte";
 
 
