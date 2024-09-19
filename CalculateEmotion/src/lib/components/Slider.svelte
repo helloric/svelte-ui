@@ -75,7 +75,7 @@
     }
 </style>
 
-<p>Lower Range: {lowerRange}, Upper Range: {upperRange}, Current: {defaultValue.toFixed(2)}, Background: {backgroundValue.toFixed(2)}</p>
+<p>Lower Range: {lowerRange}, Upper Range: {upperRange}, Current: {Number(defaultValue).toFixed(2)}, Background: {Number(backgroundValue).toFixed(2)}</p>
 <div class="bar" on:pointerdown={e => {dragging = true; onDragged(e); dragging = false; dropOff();}}>
     <div class="inner" style="width: {getDrawPos(defaultValue)}px">
     </div>

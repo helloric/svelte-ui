@@ -2,8 +2,9 @@
 	import { currentDecibels, AudioManager } from "$lib/audio_manager";
 	import Slider from "$lib/components/Slider.svelte";
 	import { currentDevice, decibelThreshold, setCurrentDevice, setDecibelThreshold, updateCurrentDevice, updateDecibelThreshold } from "$lib/storage-util";
+    import audioBufferToWav from "audiobuffer-to-wav";
 	import { onMount, type ComponentEvents } from "svelte";
-	import { writable, type Writable } from "svelte/store";
+	import { readonly, writable, type Writable } from "svelte/store";
 
     let inputDevices : Writable<MediaDeviceInfo[]> = writable([]);
     let selected : Writable<MediaDeviceInfo> = writable();
@@ -12,7 +13,7 @@
     let decibels : number = 0;
     let dbThreshold : number = $decibelThreshold;
 
-    onMount(async () => {
+    let loadMicrophone = async () => {
         updateDecibelThreshold();
         updateCurrentDevice();
 
@@ -21,14 +22,23 @@
         decibelThreshold.subscribe((val) => dbThreshold = val);
         
         selected.subscribe((val) => selectedDevice = val);
+
+        await navigator.mediaDevices.getUserMedia({audio: true});
+        
+
         let deviceInfos = await navigator.mediaDevices.enumerateDevices();
+        console.log(deviceInfos)
+        if (!deviceInfos.find(media => media.deviceId === $currentDevice))
+            setCurrentDevice('default');
         selected.set(deviceInfos.find(devInfo => devInfo.deviceId === $currentDevice)!!);
         inputDevices.set(deviceInfos.filter(device => device.kind === "audioinput"));
         let stream = await navigator.mediaDevices.getUserMedia({audio: {deviceId: $currentDevice}});
         
         let microphone = new AudioManager();
+        microphone.audioWorkletNode?.port.postMessage({event: 'update_threshold', payload: {threshold: $decibelThreshold}});
         await microphone.initMicrophone(stream);
-    });
+        return $inputDevices;
+    }
 
     
 
@@ -43,6 +53,11 @@
 
 </script>
 
+{#await loadMicrophone()}
+    <p>Waiting for Microphone to be read...</p>
+
+{:then deviceList}
+
 <h1>Select Input Device: </h1>
 
 <select bind:value={selectedDevice} on:change={_ => changeDevice()}>
@@ -56,3 +71,5 @@
 <h1>Select Decibel Threshold:</h1>
 
 <Slider lowerRange={-100} upperRange={0} backgroundValue={decibels} bind:defaultValue={dbThreshold} on:dropoff={onSliderDroppedOff}></Slider>
+
+{/await}

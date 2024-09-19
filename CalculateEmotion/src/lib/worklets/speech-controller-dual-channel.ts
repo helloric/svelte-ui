@@ -44,7 +44,7 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         let channel1: Float32Array = inputs[0][1];
 
         let measurement = this.measureData(channel0, channel1);
-        this.port.postMessage({event: 'update_decibels', payload: {'decibels': measurement[1]}});
+        this.port.postMessage({event: 'update_decibels', payload: {'decibels': measurement[2]}});
 
         switch (this.microphoneState) {
             case 0:

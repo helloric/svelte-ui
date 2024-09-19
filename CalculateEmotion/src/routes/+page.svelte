@@ -167,11 +167,14 @@
     };
   }
 
-  onMount(async () => {
+  let initMic = async () => {
     updateCurrentDevice();
     updateDecibelThreshold();
 
+    await navigator.mediaDevices.getUserMedia({audio: true}); // throw this away. no proper permission support added yet, unfortunately.
+
     let devices = await navigator.mediaDevices.enumerateDevices();
+    console.log(devices);
     if (!devices.find(media => media.deviceId === $currentDevice))
       $currentDevice = 'default';
   
@@ -182,8 +185,15 @@
     audioManager.audioWorkletNode?.port.postMessage({event: 'update_threshold', payload: {threshold: $decibelThreshold}});
     connect();
     audioManager.unblockMicrophone();
-  });
+  }
+
 </script>
+
+{#await initMic()}
+
+Waiting for the microphone to initialize...
+  
+{:then _} 
 
 <BotFace bind:emotion bind:speaking bind:color />
 
@@ -201,3 +211,5 @@
 </select>
 
 <input type="checkbox" bind:value={speaking} /> Speaking On/Off
+
+{/await}
