@@ -136,6 +136,7 @@
         let play = async (/** @type {number} */ i, /** @type {LLMMessage[]} */ messages) => {
           if (i >= messages.length) {
             if (data.release_mic) {
+              await new Promise(r => setTimeout(r, 1000));
               console.log('release.');
               audioManager?.unblockMicrophone();
             }
