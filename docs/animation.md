@@ -2,7 +2,7 @@
 
  
 
-This section covers how the animations, namely the blinking and the speaking of RICBOT were created. The "animations" itself are pretty basic. Just some SVGs which are switched in and out depending on some variables. But it helps to make RICBOT more humanlike (and it looks fancy too). Every function necessary is found in the `faceanimation.js` inside the _lib_ folder. Used are those in the `botface.svelte`, located in the _components_ folder inside _lib_ .
+This section covers how the animations, namely the blinking and the speaking of RICBOT were created. The "animations" itself are pretty basic. Just some SVGs which are switched in and out depending on some variables. But it helps to make RICBOT more humanlike (and it looks fancy too). Every function necessary is found in the `faceanimation.js` inside the _lib_ folder. They are used in the `botface.svelte`, located in the _components_ folder inside _lib_ .
 
  
 

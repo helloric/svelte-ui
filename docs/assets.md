@@ -16,6 +16,7 @@ The files inside are:
 - `eye_sad.svg` and `mouth_sad.svg` for the emotion sad
 - `eye_worried.svg` and `mouth_worried.svg` for the emotion worried
 - `eye_sleeping.svg` and `mouth_speeping.svg` which are used as the assets for blinking and speaking
+- `eye.thinking_r.svg` and `mouth_thinking.svg` which are used to create the thinking emotion
 
 ### Nice to keep in mind:
 If you take a look inside the individual SVG files, you'll notice the different object properties and color properties for each of them.

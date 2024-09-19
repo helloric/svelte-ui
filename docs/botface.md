@@ -9,7 +9,8 @@ Everything the face needs is found in the `botface.svelte` inside the _component
    1. `eyeL` and `eyeR` for the assets of the eyes
    2. `mouth` for the asset of the mouth
    3. `blinking` for the blinking ability
-   4. `mouth_class` and `eye_class` for the right coloring later in the CSS
+   4. `color` is for the default color the emotion should have
+   5. `mouth_class` and `eye_class` for the right coloring later in the CSS
 3. The animations are handled. See _The animation_ for additional details
 4. The `robotFace(emotion)` function
 
