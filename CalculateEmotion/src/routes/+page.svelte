@@ -1,5 +1,4 @@
 <script>
-  import { currentEmotion, setEmotion, calculateEmotion } from "$lib/router.js";
   import BotFace from "$lib/components/botface.svelte";
   import { emotionsNumber } from "$lib/router.js";
   import { onMount } from "svelte";
@@ -9,33 +8,16 @@
   import { conversation } from "$lib/faceanimation";
   import audioBufferToWav from "audiobuffer-to-wav";
 
-  const emotions = [
-    "amused",
-    "bored",
-    "calm",
-    "excited",
-    "frustrated",
-    "happy",
-    "sad",
-    "worried",
-    "thinking",
-  ];
-
-  const colors = [
-    "red",
-    "orange",
-    "yellow",
-    "light_green",
-    "dark_green",
-    "ligth blue",
-    "dark_blue",
-    "grey",
-  ];
+  //Avalable emotions and colors
+  const emotions = ["amused", "bored", "calm", "excited", "frustrated", "happy", "sad", "worried", "thinking"];
+  const colors = ["red", "orange", "yellow", "light_green", "dark_green", "ligth blue", "dark_blue", "grey"];
   let color = colors[0];
 
-  //calculateEmotion();
-  //setEmotion(0);
+
+  //First emotion is set
   export let emotion = emotions[emotionsNumber];
+
+  //Websocked for ROS communication
 
   let wsConnected = false;
   /**@type WebSocket | undefined */
@@ -63,7 +45,6 @@
   function connect() {
     const host = "ws://localhost:7000/ws";
     $con_text = "Connecting...";
-    
     ws = new WebSocket(host); // remember kids: the S in robot is for security.
     ws.onclose = (ev) => {
       ws = undefined;
@@ -119,12 +100,8 @@
       const data = JSON.parse(event.data);
       console.log(data);
       if (data.emotion != undefined) {
-        // setEmotion(data.emotion);
         emotion = emotions[data.emotion];
       }
-      /**if (data.emotion === undefined){
-        emotion = emotions[2];
-      }**/
       if (data.speaking != undefined) {
         speaking = data.speaking;
       }
@@ -198,8 +175,12 @@ Waiting for the microphone to initialize...
 
 <BotFace bind:emotion bind:speaking bind:color />
 
+<!--  
+Uncomment lower section for manual selection of emotions on the website. Developing/debug-tool only!   
+(Speaking is faultiy since implementing the Websocket tho. Needs fixing before using)
+-->
 
-<select bind:value={emotion}>
+<!---<select bind:value={emotion}>
   {#each emotions as emo}
     <option value={emo}>{emo}</option>
   {/each}
@@ -211,6 +192,7 @@ Waiting for the microphone to initialize...
   {/each}
 </select>
 
-<input type="checkbox" bind:value={speaking} /> Speaking On/Off
+<input type="checkbox" bind:value={speaking} /> Speaking On/Off -->
 
 {/await}
+

@@ -21,28 +21,12 @@
     import mouth_worried from "$lib/assets/mouth_worried.svg?raw";
     import mouth_speaking from "$lib/assets/mouth_sleeping.svg?raw";
     import mouth_thinking from "$lib/assets/mouth_thinking.svg?raw"
-
-    import { doBlinking } from "$lib/faceanimation";
-    import { isSpeaking } from "$lib/faceanimation";
-    import { doSpeaking } from "$lib/faceanimation";
-
+    import { doBlinking, isSpeaking, doSpeaking } from "$lib/faceanimation";
     import { onMount } from "svelte";
 
-    let eyeL;
-    let eyeR;
-    let mouth;
-    let blinking;
-    let mouth_class = '';
-    let eye_class = '';
 
-    export let color = '';
-    export let baseColor = '';
-
-    export let emotion = 'amused';
-    export let speaking = false;
-
+    //Animation
     const { isBlinking, setupBlinking } = doBlinking();
-
     onMount(() => {
         const cleanup = setupBlinking();
         return cleanup;
@@ -54,15 +38,26 @@
             eye_class = '';
             eyeR = eyeL = eye_blinking;
         }
-        //console.log("Blinking state:", $isBlinking);
-        //console.log("Speaking state:", $isSpeaking);
-
         if ($isSpeaking) {
             mouth_class = 'strokefill'
             mouth = mouth_speaking;
         }
         doSpeaking(speaking);
     }
+
+
+    //Face itself
+    let eyeL;
+    let eyeR;
+    let mouth;
+    let blinking;
+    let mouth_class = '';
+    let eye_class = '';
+
+    export let color = '';
+    export let baseColor = '';
+    export let emotion = 'calm';
+    export let speaking = false;
 
     function robotFace(emotion) {
         const options = {
