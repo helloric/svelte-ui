@@ -27,6 +27,55 @@
   let con_text = writable("");
   /** @type AudioManager | undefined */
   let audioManager;
+  /** @type LLMMessage[] */
+  let messages = [];
+  let should_release_mic = true;
+
+
+  function addToMessages(/** @type LLMMessage[] */ msgs, /** @type boolean */ release_mic) {
+    console.log(messages.length);
+    if (messages.length == 0) {
+      messages = msgs;
+      should_release_mic = release_mic;
+      play();
+    } else {
+      messages.push(...msgs);
+      should_release_mic = release_mic;
+    }
+  }
+
+  async function play() {
+    if (messages.length == 0) {
+      if (should_release_mic) {
+        await new Promise(r => setTimeout(r, 1000));
+        console.log('release.');
+        audioManager?.unblockMicrophone();
+      }
+      should_release_mic = true;
+      speaking = false;
+    } else {
+        let msg = messages.shift();
+        if (!msg) return;
+        if (msg.emotion === 8) {
+          if (messages.length == 0) {
+            emotion = emotions[msg.emotion];
+            return;
+          } else {
+            play();
+          }
+        } else if (msg.is_pause) {
+          speaking = false;
+          await new Promise(r => setTimeout(r, 2000));
+          play();
+        } else {
+          speaking = true;
+          emotion = emotions[msg.emotion];
+          let audio = new Audio(`data:audio/wav;base64,${msg.b64audio}`)
+          audio.onended = _ => play();
+          audio.play();
+        }
+      }
+    }
 
   function reconnect() {
     if ($counter == 0) {
@@ -110,37 +159,7 @@
         /** @type LLMMessage[] */ 
         let messages = data.messages
 
-        let play = async (/** @type {number} */ i, /** @type {LLMMessage[]} */ messages) => {
-          if (i >= messages.length) {
-            if (data.release_mic) {
-              await new Promise(r => setTimeout(r, 1000));
-              console.log('release.');
-              audioManager?.unblockMicrophone();
-            }
-            speaking = false;
-          } else {
-              let msg = messages[i];
-              if (messages[i].emotion === 8) {
-                if (i === messages.length - 1) {
-                  emotion = emotions[msg.emotion];
-                  return;
-                } else {
-                  play(i+1, messages);
-                }
-              } else if (messages[i].is_pause) {
-                speaking = false;
-                await new Promise(r => setTimeout(r, 2000));
-                play(i+1, messages);
-              } else {
-                speaking = true;
-                emotion = emotions[msg.emotion];
-                let audio = new Audio(`data:audio/wav;base64,${msg.b64audio}`)
-                audio.onended = _ => play(i+1, messages);
-                audio.play();
-              }
-            }
-          }
-        await play(0, messages);
+        addToMessages(messages, data.release_mic);
       }
     };
   }
@@ -168,19 +187,16 @@
 </script>
 
 {#await initMic()}
+  Waiting for the microphone to initialize...
+{:then _}
+  <BotFace bind:emotion bind:speaking bind:color />
 
-Waiting for the microphone to initialize...
-  
-{:then _} 
-
-<BotFace bind:emotion bind:speaking bind:color />
-
-<!--  
+  <!--  
 Uncomment lower section for manual selection of emotions on the website. Developing/debug-tool only!   
 (Speaking is faultiy since implementing the Websocket tho. Needs fixing before using)
 -->
 
-<!---<select bind:value={emotion}>
+  <!---<select bind:value={emotion}>
   {#each emotions as emo}
     <option value={emo}>{emo}</option>
   {/each}
@@ -193,6 +209,4 @@ Uncomment lower section for manual selection of emotions on the website. Develop
 </select>
 
 <input type="checkbox" bind:value={speaking} /> Speaking On/Off -->
-
 {/await}
-
