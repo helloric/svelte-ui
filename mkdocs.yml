@@ -4,14 +4,15 @@ nav:
   - Overview:
     - Framework: svelte.md
     - Purpose: getting-Started.md
-    - The communication with LLM: backend.md
-  - The Code itself:
-    - The assets: assets.md
-    - The botface component: botface.md
-    - The CSS behind: style.md
-    - The animaion: animation.md
-    - The router: router.md
-    - The final Display: routes_folder.md
+    - The Communication With LLM: backend.md
+  - The Code Itself:
+    - The Assets: assets.md
+    - The Botface Component: botface.md
+    - The CSS Behind: style.md
+    - The Animation: animation.md
+    - The Router: router.md
+    - The Final Display: routes_folder.md
+    - The Audio Manager: audio_manager.md
   #- Messages:
    # - Overview: messages/overview.md
   #- Informations:
@@ -40,7 +41,11 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - admonition
