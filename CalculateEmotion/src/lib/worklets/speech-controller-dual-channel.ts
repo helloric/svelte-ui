@@ -57,7 +57,7 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
                 this.collect('frames', channel0, channel1);
                 if (measurement[2] < this.decibelThreshold) {
                     this.collect('idleFrames', channel0, channel1);
-                    if (this.idleFramesChannel0.length >= this.getFrameSeconds(4)) {
+                    if (this.idleFramesChannel0.length >= this.getFrameSeconds(3)) {
                         this.send();
                     }
                 } else {

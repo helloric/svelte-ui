@@ -52,7 +52,7 @@ class SpeechController extends AudioWorkletProcessor {
                 this.frames = Float32Array.of(...this.frames, ...measurement[0]);
                 if (measurement[1] < this.decibelThreshold) {
                     this.idle_frames = Float32Array.of(...this.idle_frames, ...measurement[0]);
-                    if (this.idle_frames.length >= this.getFrameSeconds(4)) {
+                    if (this.idle_frames.length >= this.getFrameSeconds(3)) {
                         outputs[0] = this.frames;
                         this.send();
                     }
