@@ -1,0 +1,9 @@
+version: '3'
+services:
+  emotion-system:
+    tty: true
+    build:
+      context: ./
+      dockerfile: docker/Dockerfile
+    ports:
+      - 5173:5173

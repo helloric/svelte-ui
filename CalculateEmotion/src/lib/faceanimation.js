@@ -33,6 +33,7 @@ export function changeState() {
 //Speaking function
 export const isSpeaking = writable(false);
 
+/** @type number | undefined | null */
 let speakInterval;
 let duration = 200;
 let interval = 450;
