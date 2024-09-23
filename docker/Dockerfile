@@ -8,7 +8,7 @@ WORKDIR /root/build
 
 EXPOSE ${SERVER_PORT}
 EXPOSE 7000
-
+ 
 COPY . .
 
 RUN chmod +x ./startup.sh

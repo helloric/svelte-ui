@@ -6,6 +6,8 @@ It displays the emotion 'calm' by default
 
 export let emotionsNumber = 2;
 
+
+/** @param {number} index*/
 export function setEmotion(index) {
   emotionsNumber = index;
 }
@@ -24,6 +26,8 @@ let arousal = -2;
 let valence = 0;
 
 //Update arousal and valence. Called by LLM ideally
+
+/** @param {number} newArousal, @param {number} newValence*/
 export function updateAoursalValence(newArousal, newValence) {
   if (arousal > 3 || arousal < -4) {
     throw new Error("Invalid value for arousal");

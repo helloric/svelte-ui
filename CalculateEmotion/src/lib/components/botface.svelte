@@ -31,8 +31,8 @@
         const cleanup = setupBlinking();
         return cleanup;
     });
-
-    $: {
+    
+     $: {
         robotFace(emotion);
         if ($isBlinking && blinking) {
             eye_class = '';
@@ -47,9 +47,17 @@
 
 
     //Face itself
+    
+    /** @type {string}*/
     let eyeL;
+
+    /** @type {string}*/
     let eyeR;
+
+    /** @type {string}*/
     let mouth;
+
+    /** @type {boolean}*/
     let blinking;
     let mouth_class = '';
     let eye_class = '';
@@ -59,6 +67,7 @@
     export let emotion = 'calm';
     export let speaking = false;
 
+    /**@param {string} emotion*/
     function robotFace(emotion) {
         const options = {
             amused: {eyeR: eye_amused, eyeL: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: '', blinking: false, color: 'yellow'},
@@ -71,12 +80,19 @@
             worried: {eyeR: eye_worried, eyeL: eye_worried, mouth: mouth_worried, mouth_class: '', eye_class:'strokefill', blinking: true, color: 'dark_blue'},
             thinking: {eyeR: eye_thinking_r, eyeL: eye_calm, mouth: mouth_thinking, mouth_class: '', eye_class: 'strokefill', blinking: true, color: ''},
         }
+        // @ts-ignore
         eyeR = options[emotion]['eyeR'];
+        // @ts-ignore
         eyeL = options[emotion]['eyeL'];
+        // @ts-ignore
         mouth = options[emotion]['mouth'];
+        // @ts-ignore
         mouth_class = options[emotion]['mouth_class'];
+        // @ts-ignore
         eye_class = options[emotion]['eye_class'];
+        // @ts-ignore
         blinking = options[emotion]['blinking'];
+        // @ts-ignore
         color = options[emotion]['color'];
     }
 </script>

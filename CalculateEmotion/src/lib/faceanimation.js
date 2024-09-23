@@ -38,6 +38,8 @@ let speakInterval;
 let duration = 200;
 let interval = 450;
 
+
+/**@param {boolean | undefined} speak*/
 export function doSpeaking(speak) {
   if (speak === undefined) {
     changeState();
