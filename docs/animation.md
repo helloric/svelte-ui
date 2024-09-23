@@ -18,7 +18,7 @@ The heart of the blinking animation is the `doBlinking()` function:
 
  
 
-```
+```JavaScript
 
 export function doBlinking(interval = 5000, duration = 200) {
 
@@ -94,7 +94,7 @@ The speaking animation works at its core pretty much the same as the blinking an
 
 Let’s look at the function in detail:
 
-```
+```JavaScript
 
 let speakInterval;
 
@@ -194,7 +194,7 @@ In the `onMount()` function, `setupBlinking()` is called. This starts the blinki
 
 Now to where the magic happens:
 
-```
+```JavaScript
 
 $: {
 

@@ -9,7 +9,7 @@ Here is where it gets interesting. First, the colors themselves are stored in a 
 
  
 
-```
+```CSS
 
 .red path {
 

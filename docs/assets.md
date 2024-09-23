@@ -23,4 +23,4 @@ If you take a look inside the individual SVG files, you'll notice the different 
 
 For example:`ellipse cx="21.809" cy="31.511" rx="21.809" ry="31.511"` and `fill="none" stroke="#70c1e2" `
 
-Depending on those parameters, different CSS functions are used later to color the pieces. Let's look at the color properties: Either fill is used, stroke is used or both of them are used. For each of those cases, there are different CCS functions used to color the SVG. This allows RICBOT to have more than the default light blue face color. This will be expanded on in "The CSS behind". Just keep the importance of the color properties in mind. 
+Depending on those parameters, different CSS functions are used later to color the pieces. Let's look at the color properties: Either fill is used, stroke is used, or both of them are used. For each of those cases, there are different CCS functions used to color the SVG. This allows RICBOT to have more than the default light blue face color. This will be expanded on in "The CSS behind". Just keep the importance of the color properties in mind. 

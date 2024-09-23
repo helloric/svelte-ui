@@ -5,13 +5,14 @@ nav:
     - Framework: svelte.md
     - Purpose: getting-Started.md
     - The Communication With LLM: backend.md
+    - Docker: docker.md
   - The Code Itself:
     - The Assets: assets.md
     - The Botface Component: botface.md
     - The CSS Behind: style.md
     - The Animation: animation.md
     - The Router: router.md
-    - The Final Display: routes_folder.md
+    - The Final Display and connection to the LLM: routes_folder.md
     - The Audio Manager: audio_manager.md
   #- Messages:
    # - Overview: messages/overview.md
