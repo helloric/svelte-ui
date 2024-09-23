@@ -39,7 +39,7 @@ npm run dev -- --host --port ${SERVER_PORT}
 This starts the application automatically and hosts it on your network when opening the container. With this already done, RICBOT only has to access the site the application is hosted on. And voilà, there is the face!
 
 ## How to access
-After cloning the emotion repository, go to https://www.docker.com and download Docker Desktop. After that, start Docker Desktop, open the repository in Visual Studio Code and type the following two things in the console:
+After cloning the emotion repository, go to [the official Docker website](https://www.docker.com) and download Docker Desktop. After that, start Docker Desktop, open the repository in Visual Studio Code and type the following two things in the console:
 ```
 docker compose build
 ```

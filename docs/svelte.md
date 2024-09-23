@@ -21,7 +21,7 @@ Do this to run the system inside the repository:
 cd CalculateEmotion
 npm run dev
 ```
-Now, the botface will be visible on http://localhost:5173/. 
+Now, the botface will be visible on [http://localhost:5173/](http://localhost:5173/). 
 
 ## So many folders ???
 Relax, you only have to use a fraction of the displayed folders and components.
@@ -60,7 +60,7 @@ Like described earlier, type the following in the console of the project:
 ```
 npm run dev
 ```
-This opens port 5173, which can be accessed with http://localhost:5173/. 5173 is the default port set by SvelteKit to display it's applications. There you have the face!
+This opens port 5173, which can be accessed with [http://localhost:5173/](http://localhost:5173/). 5173 is the default port set by SvelteKit to display it's applications. There you have the face!
 For development purposes, this is enough. The actual building of the website is done in the Dockerfile. 
 
-For additional questions regarding SvelteKit, just visit https://kit.svelte.dev
+For additional questions regarding SvelteKit, just visit [the official SvelteKit website](https://kit.svelte.dev). It has a really good documentation too.

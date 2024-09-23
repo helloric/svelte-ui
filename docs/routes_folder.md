@@ -1,6 +1,6 @@
 # The +page.svelte
 
-The actual "displaying" happens inside the `+page.svelte` file inside the _routes_ folder. The `+page.svelte` can be seen as the homepage or main page of a website. Different subpages, such as settings in this project, are just additional `+page.svelte` files inside their own folder in the _routes_ folder. To access settings in the browser, just type in http://localhost:5173/settings while running the emotionsystem. The face itself only needs one display page because we just swap the face components in and out based on the current emotion. This saves us the trouble of creating multiple subpages for each emotion. Furthermore, the Websocket connection and the speech input and output from the LLM are also handled here in the main `+page.svelte`.
+The actual "displaying" happens inside the `+page.svelte` file inside the _routes_ folder. The `+page.svelte` can be seen as the homepage or main page of a website. Different subpages, such as settings in this project, are just additional `+page.svelte` files inside their own folder in the _routes_ folder. To access settings in the browser, just type in [http://localhost:5173/settings](http://localhost:5173/settings) while running the emotionsystem. The face itself only needs one display page because we just swap the face components in and out based on the current emotion. This saves us the trouble of creating multiple subpages for each emotion. Furthermore, the Websocket connection and the speech input and output from the LLM are also handled here in the main `+page.svelte`.
 
 ## The content
 
