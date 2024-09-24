@@ -9,14 +9,16 @@
     //let currentValue: number = defaultValue;
     let dragging: boolean = false;
 
+    const BAR_WIDTH = 400;
+
     const dispatch = createEventDispatcher();
 
     const getDrawPos = (value: number) => {
-        return ((value - lowerRange) / (upperRange - lowerRange)) * 420;
+        return ((value - lowerRange) / (upperRange - lowerRange)) * BAR_WIDTH;
     }
 
     const posToValue = (pos: number) => {
-        return (pos / 420) * (upperRange - lowerRange) + lowerRange;
+        return (pos / BAR_WIDTH) * (upperRange - lowerRange) + lowerRange;
     }
 
     const dropOff = () => dispatch('dropoff', defaultValue);
