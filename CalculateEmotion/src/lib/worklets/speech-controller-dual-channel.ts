@@ -1,12 +1,30 @@
 // @ts-ignore
 class SpeechControllerDualChannel extends AudioWorkletProcessor {
 
+    /** The audio frames that should end up in Channel 0. */
     framesChannel0 : Float32Array = Float32Array.of();
+    /** The audio frames that should end up in Channel 1. */
     framesChannel1 : Float32Array = Float32Array.of();
+
+    /** 
+     * Audio frames that are measured below a certain threshold in Channel 0. 
+     * Will be cleared each time audio frames above a certain threshold are detected. 
+     */
     idleFramesChannel0 : Float32Array = Float32Array.of();
+    
+    /** 
+     * Audio frames that are measured below a certain threshold in Channel 1. 
+     * Will be cleared each time audio frames above a certain threshold are detected. 
+     */
     idleFramesChannel1 : Float32Array = Float32Array.of();
+
+    /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
-    microphoneState = 2;
+
+    /** The microphone state. (0 = IDLE, 1 = LISTENING, 2 = BLOCKED) */
+    microphoneState : 0 | 1 | 2 = 2;
+
+    /** The sampling rate. */
     sampleRate = 44100;
 
     port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
@@ -68,6 +86,9 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         return true;
     }
 
+    /**
+     * Sends out the collected audio frames.
+     */
     send() {
         this.port.postMessage({event: 'audio_available', payload: {'audio_data': {'0': this.framesChannel0, '1': this.framesChannel1}}});
         this.clear('frames')
@@ -75,10 +96,21 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         this.microphoneState = 2;
     }
 
+    /**
+     * Gets a certain amount of frames over the course of n seconds.
+     * @param seconds The n seconds
+     * @returns A certain amount of frames over the course of n seconds.
+     */
     getFrameSeconds(seconds: number) {
         return Math.round(this.sampleRate / 8 * seconds);
     }
 
+    /**
+     * Puts a decibel count to the measured data.
+     * @param channel0 The data from channel 0
+     * @param channel1 The data from channel 1
+     * @returns A decibel count and the original audios.
+     */
     private measureData = (channel0: Float32Array, channel1: Float32Array): [Float32Array, Float32Array, number] => {
         let sum1 = channel0.reduce((acc, next) => acc + (next * next), 0);
         let sum2 = channel1.reduce((acc, next) => acc + (next * next), 0);
@@ -91,11 +123,21 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         return [channel0, channel1, db];
     }
 
+    /**
+     * Collects frames into their corresponding collections.
+     * @param frames The collection to be filled
+     * @param ch0 The frames from channel 0.
+     * @param ch1 The frames from channel 1.
+     */
     private collect = (frames: 'idleFrames' | 'frames', ch0: Float32Array, ch1: Float32Array) => {
         this[`${frames}Channel0`] = Float32Array.of(...this[`${frames}Channel0`], ...ch0)
         this[`${frames}Channel1`] = Float32Array.of(...this[`${frames}Channel1`], ...ch1)
     }
 
+    /**
+     * Clears the corresponding collections.
+     * @param frames The collection to be cleared.
+     */
     private clear = (frames : 'idleFrames' | 'frames') => {
         this[`${frames}Channel0`] = Float32Array.of();
         this[`${frames}Channel1`] = Float32Array.of();   

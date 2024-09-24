@@ -1,10 +1,22 @@
 // @ts-ignore
 class SpeechController extends AudioWorkletProcessor {
 
+     /** The audio frames. */
     frames : Float32Array = Float32Array.of();
+
+    /** 
+     * Audio frames that are measured below a certain threshold. 
+     * Will be cleared each time audio frames above a certain threshold are detected. 
+     */
     idle_frames : Float32Array = Float32Array.of();
+
+    /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
-    microphoneState = 2;
+
+    /** The microphone state. (0 = IDLE, 1 = LISTENING, 2 = BLOCKED) */
+    microphoneState : 0 | 1 | 2 = 2;
+
+    /** The sampling rate */
     sampleRate = 44100;
 
     port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
@@ -63,7 +75,10 @@ class SpeechController extends AudioWorkletProcessor {
 
         return true;
     }
-
+    
+    /**
+     * Sends out the collected audio frames.
+     */
     send() {
         this.port.postMessage({event: 'audio_available', payload: {'audio_data': this.frames}});
         this.frames = Float32Array.of();
@@ -71,10 +86,20 @@ class SpeechController extends AudioWorkletProcessor {
         this.microphoneState = 2;
     }
 
+    /**
+     * Gets a certain amount of frames over the course of n seconds.
+     * @param seconds The n seconds
+     * @returns A certain amount of frames over the course of n seconds.
+     */
     getFrameSeconds(seconds: number) {
         return Math.round(this.sampleRate / 8 * seconds);
     }
 
+    /**
+     * Puts a decibel count to the measured data.
+     * @param data The audio data
+     * @returns A decibel count and the original audio.
+     */
     private measureData = (data: Float32Array) : [Float32Array, number] => {
         let sum = data.reduce((acc, next) => acc + (next * next), 0);
         
