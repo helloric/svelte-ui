@@ -12,6 +12,7 @@
     let selectedDevice : MediaDeviceInfo;
     let decibels : number = 0;
     let dbThreshold : number = $decibelThreshold;
+    let audioReceived : Writable<number> = writable(0);
 
     let loadMicrophone = async () => {
         updateDecibelThreshold();
@@ -35,8 +36,18 @@
         let stream = await navigator.mediaDevices.getUserMedia({audio: {deviceId: $currentDevice}});
         
         let microphone = new AudioManager();
-        microphone.audioWorkletNode?.port.postMessage({event: 'update_threshold', payload: {threshold: $decibelThreshold}});
         await microphone.initMicrophone(stream);
+        microphone.audioWorkletNode?.port.postMessage({event: 'update_threshold', payload: {threshold: $decibelThreshold}});
+        microphone.unblockMicrophone();
+        if (microphone.audioWorkletNode) {
+            microphone.audioWorkletNode.port.addEventListener('message', e => {
+                if (e.data['event'] === 'audio_available') {
+                    $audioReceived++;
+                    microphone.unblockMicrophone();
+                }
+            });
+        }
+        console.log('How often do you get claled');
         return $inputDevices;
     }
 
@@ -71,5 +82,7 @@
 <h1>Select Decibel Threshold:</h1>
 
 <Slider lowerRange={-100} upperRange={0} backgroundValue={decibels} bind:defaultValue={dbThreshold} on:dropoff={onSliderDroppedOff}></Slider>
+
+<h1>Audios Received: {$audioReceived}</h1>
 
 {/await}
