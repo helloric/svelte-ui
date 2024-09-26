@@ -4,12 +4,6 @@ class SpeechController extends AudioWorkletProcessor {
      /** The audio frames. */
     frames : Float32Array = Float32Array.of();
 
-    /** 
-     * Audio frames that are measured below a certain threshold. 
-     * Will be cleared each time audio frames above a certain threshold are detected. 
-     */
-    idle_frames : Float32Array = Float32Array.of();
-
     /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
 
@@ -21,6 +15,9 @@ class SpeechController extends AudioWorkletProcessor {
 
     port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
 
+    /** The start time. Updates for each speech-frame. */
+    startTime : number = currentTime;
+    
     constructor() {
         super();
         this.port.onmessage = (e) => {
@@ -58,18 +55,19 @@ class SpeechController extends AudioWorkletProcessor {
                 if (measurement[1] >= this.decibelThreshold) {
                     this.frames = Float32Array.of(...this.frames, ...measurement[0]);
                     this.microphoneState = 1;
+                    this.startTime = currentTime;
                 }
                 break;
             case 1:
                 this.frames = Float32Array.of(...this.frames, ...measurement[0]);
                 if (measurement[1] < this.decibelThreshold) {
                     this.idle_frames = Float32Array.of(...this.idle_frames, ...measurement[0]);
-                    if (this.idle_frames.length >= this.getFrameSeconds(3)) {
+                    if (currentTime - this.startTime >= 0.3) {
                         outputs[0] = this.frames;
                         this.send();
                     }
                 } else {
-                    this.idle_frames = Float32Array.of();
+                    this.startTime = currentTime;
                 }
         }
 
@@ -82,7 +80,7 @@ class SpeechController extends AudioWorkletProcessor {
     send() {
         this.port.postMessage({event: 'audio_available', payload: {'audio_data': this.frames}});
         this.frames = Float32Array.of();
-        this.idle_frames = Float32Array.of();
+        this.startTime = currentTime;
         this.microphoneState = 2;
     }
 
@@ -92,7 +90,7 @@ class SpeechController extends AudioWorkletProcessor {
      * @returns A certain amount of frames over the course of n seconds.
      */
     getFrameSeconds(seconds: number) {
-        return Math.round(this.sampleRate / 8 * seconds);
+        return Math.round(this.sampleRate / 16 * seconds);
     }
 
     /**

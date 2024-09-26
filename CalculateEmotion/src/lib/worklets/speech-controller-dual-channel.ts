@@ -6,18 +6,6 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
     /** The audio frames that should end up in Channel 1. */
     framesChannel1 : Float32Array = Float32Array.of();
 
-    /** 
-     * Audio frames that are measured below a certain threshold in Channel 0. 
-     * Will be cleared each time audio frames above a certain threshold are detected. 
-     */
-    idleFramesChannel0 : Float32Array = Float32Array.of();
-    
-    /** 
-     * Audio frames that are measured below a certain threshold in Channel 1. 
-     * Will be cleared each time audio frames above a certain threshold are detected. 
-     */
-    idleFramesChannel1 : Float32Array = Float32Array.of();
-
     /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
 
@@ -28,6 +16,9 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
     sampleRate = 44100;
 
     port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
+
+    /** The start time. Updates for each speech-frame. */
+    startTime : number = currentTime;
 
     constructor() {
         super();
@@ -67,19 +58,19 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         switch (this.microphoneState) {
             case 0:
                 if (measurement[2] >= this.decibelThreshold) {
-                    this.collect('frames', channel0, channel1);
+                    this.collect(channel0, channel1);
+                    this.startTime = currentTime;
                     this.microphoneState = 1;
                 }
                 break;
             case 1:
-                this.collect('frames', channel0, channel1);
+                this.collect(channel0, channel1);
                 if (measurement[2] < this.decibelThreshold) {
-                    this.collect('idleFrames', channel0, channel1);
-                    if (this.idleFramesChannel0.length >= this.getFrameSeconds(3)) {
+                    if (currentTime - this.startTime >= 0.3) {
                         this.send();
                     }
                 } else {
-                    this.clear('idleFrames')
+                    this.startTime = currentTime;
                 }
         }
 
@@ -91,18 +82,9 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
      */
     send() {
         this.port.postMessage({event: 'audio_available', payload: {'audio_data': {'0': this.framesChannel0, '1': this.framesChannel1}}});
-        this.clear('frames')
-        this.clear('idleFrames')
+        this.clear()
+        this.startTime = currentTime;
         this.microphoneState = 2;
-    }
-
-    /**
-     * Gets a certain amount of frames over the course of n seconds.
-     * @param seconds The n seconds
-     * @returns A certain amount of frames over the course of n seconds.
-     */
-    getFrameSeconds(seconds: number) {
-        return Math.round(this.sampleRate / 8 * seconds);
     }
 
     /**
@@ -125,22 +107,20 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
 
     /**
      * Collects frames into their corresponding collections.
-     * @param frames The collection to be filled
      * @param ch0 The frames from channel 0.
      * @param ch1 The frames from channel 1.
      */
-    private collect = (frames: 'idleFrames' | 'frames', ch0: Float32Array, ch1: Float32Array) => {
-        this[`${frames}Channel0`] = Float32Array.of(...this[`${frames}Channel0`], ...ch0)
-        this[`${frames}Channel1`] = Float32Array.of(...this[`${frames}Channel1`], ...ch1)
+    private collect = (ch0: Float32Array, ch1: Float32Array) => {
+        this.framesChannel0 = Float32Array.of(...this.framesChannel0, ...ch0)
+        this.framesChannel1 = Float32Array.of(...this.framesChannel1, ...ch1)
     }
 
     /**
      * Clears the corresponding collections.
-     * @param frames The collection to be cleared.
      */
-    private clear = (frames : 'idleFrames' | 'frames') => {
-        this[`${frames}Channel0`] = Float32Array.of();
-        this[`${frames}Channel1`] = Float32Array.of();   
+    private clear = () => {
+        this.framesChannel0 = Float32Array.of();
+        this.framesChannel1 = Float32Array.of();   
     }
 }
 
