@@ -5,7 +5,7 @@
 - [Visual Studio Code](https://code.visualstudio.com)
 - [Node.js](https://nodejs.org/en)
 - [Docker](https://www.docker.com)
-- Dev Container and Docker Extention for Visual Studio Code
+- [Dev Container and Docker Extension for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ## How to access without Docker
 
