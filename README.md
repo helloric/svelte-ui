@@ -30,4 +30,4 @@
 
 For answering additional questions read the [documentation](https://git.hb.dfki.de/helloric/helloric-24/documentation/documentation).
 
-Good luck for your project. 
+Good luck for your project!
