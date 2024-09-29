@@ -85,15 +85,6 @@ class SpeechController extends AudioWorkletProcessor {
     }
 
     /**
-     * Gets a certain amount of frames over the course of n seconds.
-     * @param seconds The n seconds
-     * @returns A certain amount of frames over the course of n seconds.
-     */
-    getFrameSeconds(seconds: number) {
-        return Math.round(this.sampleRate / 16 * seconds);
-    }
-
-    /**
      * Puts a decibel count to the measured data.
      * @param data The audio data
      * @returns A decibel count and the original audio.
