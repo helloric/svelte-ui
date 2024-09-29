@@ -1,0 +1,104 @@
+// @ts-ignore
+class SpeechController extends AudioWorkletProcessor {
+
+     /** The audio frames. */
+    frames : Float32Array = Float32Array.of();
+
+    /** The threshold above which audio is considered speech. */
+    decibelThreshold = -64;
+
+    /** The microphone state. (0 = IDLE, 1 = LISTENING, 2 = BLOCKED) */
+    microphoneState : 0 | 1 | 2 = 2;
+
+    /** The sampling rate */
+    sampleRate = 44100;
+
+    port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
+
+    /** The start time. Updates for each speech-frame. */
+    startTime : number = currentTime;
+    
+    constructor() {
+        super();
+        this.port.onmessage = (e) => {
+            switch (e.data['event']) {
+                case 'update_threshold':
+                    this.decibelThreshold = e.data['payload']['threshold'];
+                    break;
+                case 'update_sample_rate':
+                    this.sampleRate = e.data['payload']['sampleRate'];
+                    break;
+                case 'unblock_microphone':
+                    this.microphoneState = 0;
+                    break;
+                case 'block_microphone':
+                    this.microphoneState = 2;
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Processes any microphone input, recognizing when to look for speech and when not.
+     * @param inputs The input data of the microphone, a 2D-Float32Array.
+     * @param outputs The output data of the microphone, usually not used.
+     * @param parameters The parameters
+     * @returns Whether or not to continue processing.
+     */
+    //@ts-ignore
+    process(inputs, outputs, parameters: any) {
+        let measurement = this.measureData(inputs[0][0]);
+        this.port.postMessage({event: 'update_decibels', payload: {'decibels': measurement[1]}});
+
+        switch (this.microphoneState) {
+            case 0:
+                if (measurement[1] >= this.decibelThreshold) {
+                    this.frames = Float32Array.of(...this.frames, ...measurement[0]);
+                    this.microphoneState = 1;
+                    this.startTime = currentTime;
+                }
+                break;
+            case 1:
+                this.frames = Float32Array.of(...this.frames, ...measurement[0]);
+                if (measurement[1] < this.decibelThreshold) {
+                    this.idle_frames = Float32Array.of(...this.idle_frames, ...measurement[0]);
+                    if (currentTime - this.startTime >= 0.3) {
+                        outputs[0] = this.frames;
+                        this.send();
+                    }
+                } else {
+                    this.startTime = currentTime;
+                }
+        }
+
+        return true;
+    }
+    
+    /**
+     * Sends out the collected audio frames.
+     */
+    send() {
+        this.port.postMessage({event: 'audio_available', payload: {'audio_data': this.frames}});
+        this.frames = Float32Array.of();
+        this.startTime = currentTime;
+        this.microphoneState = 2;
+    }
+
+    /**
+     * Puts a decibel count to the measured data.
+     * @param data The audio data
+     * @returns A decibel count and the original audio.
+     */
+    private measureData = (data: Float32Array) : [Float32Array, number] => {
+        let sum = data.reduce((acc, next) => acc + (next * next), 0);
+        
+        let rms = Math.sqrt(sum / data.length);
+        
+        let db = 20 * Math.log10(rms)
+
+        return [data, db];
+    }
+}
+
+registerProcessor('speech-controller', SpeechController)
+

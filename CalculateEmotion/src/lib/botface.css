@@ -1,0 +1,131 @@
+.faceContainter {
+    width: 100%;
+    height: 1000%;
+    position: relative;
+    margin: 0, auto;
+}
+
+.faceContainter .base svg{
+    width: 100%;
+}
+
+.faceContainter .eyeL svg{
+    position: absolute;
+    top: 0;
+    bottom: 30%;
+    left: 0;
+    right: 40%;
+    margin: auto;
+    width: 14.6%;
+}
+
+.faceContainter .eyeR svg{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    top: 0;
+    bottom: 30%;
+    left: 40%;
+    right: 0;
+    margin: auto;
+    width: 14.6%;
+}
+
+.faceContainter .mouth svg{
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
+}
+
+.faceContainter .speakingMouth svg{
+    position: absolute;
+    top: 0;
+    bottom: -30%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 56%;
+}
+
+:root{
+    --red: rgb(240, 20, 20);
+    --orange: rgb(255, 122, 14);
+    --yellow: rgb(255, 251, 0);
+    --ligthGreen: rgb(8, 255, 28);
+    --darkGreen: rgb(50, 148, 58);
+    --darkBlue: rgb(32, 29, 255);
+    --grey: rgb(129, 129, 129);
+    --baseColor: #0e141e;
+}
+
+body {
+    background-color: var(--baseColor);
+    color: white;
+}
+
+.red path {
+    stroke: var(--red);
+}
+
+.red circle, .red ellipse, .red rect, .red.strokefill path {
+    fill: var(--red);
+    stroke: var(--red);
+}
+
+.orange path {
+    stroke: var(--orange);
+}
+
+.orange circle, .orange ellipse, .orange rect, .orange.strokefill path {
+    fill: var(--orange);
+    stroke: var(--orange);
+}
+
+.yellow path {
+    stroke: var(--yellow);
+}
+
+.yellow circle, .yellow ellipse, .yellow rect, .yellow.strokefill path {
+    stroke: var(--yellow);
+    fill: var(--yellow);
+}
+
+.light_green path {
+    stroke: var(--ligthGreen);
+}
+
+.light_green circle, .light_green ellipse, .light_green rect, .light_green.strokefill path {
+    stroke: var(--ligthGreen);
+    fill: var(--ligthGreen);
+}
+
+.dark_green path {
+    stroke: var(--darkGreen);
+}
+
+.dark_green circle, .dark_green ellipse, .dark_green rect, .dark_green.strokefill path {
+    stroke: var(--darkGreen);
+    fill: var(--darkGreen);
+}
+
+.dark_blue path {
+    stroke: var(--darkBlue);
+}
+
+.dark_blue circle, .dark_blue ellipse, .dark_blue rect, .dark_blue.strokefill path {
+    stroke: var(--darkBlue);
+    fill: var(--darkBlue);
+}
+
+.grey path {
+    stroke: var(--grey);
+}
+
+.grey circle, .grey ellipse, .grey rect, .grey.strokefill path {
+    stroke: var(--grey);
+    fill: var(--grey);
+}

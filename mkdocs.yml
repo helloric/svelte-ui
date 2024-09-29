@@ -1,0 +1,59 @@
+site_name: HelloRIC Documentation
+site_url: http://127.0.0.1:8000/
+nav:
+  - Overview:
+    - Framework: svelte.md
+    - Purpose: getting-Started.md
+    - The Communication With LLM: backend.md
+    - Docker: docker.md
+  - The Code Itself:
+    - The Assets: assets.md
+    - The Botface Component: botface.md
+    - The CSS Behind: style.md
+    - The Animation: animation.md
+    - The Router: router.md
+    - The Final Display and connection to the LLM: routes_folder.md
+    - The Audio Manager: audio_manager.md
+  #- Messages:
+   # - Overview: messages/overview.md
+  #- Informations:
+   # - Exhibits: informations/exhibits.md
+
+theme:
+  name: material
+  palette:
+   - scheme: default
+     toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+   - scheme: slate
+     toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+        
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        paths: [src]
