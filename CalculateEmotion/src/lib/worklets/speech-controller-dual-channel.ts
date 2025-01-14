@@ -95,14 +95,21 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
      */
     private measureData = (channel0: Float32Array, channel1: Float32Array): [Float32Array, Float32Array, number] => {
         let sum1 = channel0.reduce((acc, next) => acc + (next * next), 0);
-        let sum2 = channel1.reduce((acc, next) => acc + (next * next), 0);
-        let sum = sum1 + sum2;
-        
-        let rms = Math.sqrt(sum / (channel0.length + channel1.length));
-        
-        let db = 20 * Math.log10(rms)
+        if (channel1) {
+            let sum2 = channel1.reduce((acc, next) => acc + (next * next), 0);
+            let sum = sum1 + sum2;
+            
+            let rms = Math.sqrt(sum / (channel0.length + channel1.length));
+            
+            let db = 20 * Math.log10(rms)
+    
+            return [channel0, channel1, db];
+        } else {
+            let rms = Math.sqrt(sum1 / channel0.length);
+            let db = 20 * Math.log10(rms);
+            return [channel0, channel0, db];
+        }
 
-        return [channel0, channel1, db];
     }
 
     /**
