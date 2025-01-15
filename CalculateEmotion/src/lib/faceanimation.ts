@@ -33,14 +33,12 @@ export function changeState() {
 //Speaking function
 export const isSpeaking = writable(false);
 
-/** @type number | undefined | null */
-let speakInterval;
+let speakInterval: number | undefined;
 let duration = 200;
 let interval = 450;
 
 
-/**@param {boolean | undefined} speak*/
-export function doSpeaking(speak) {
+export function doSpeaking(speak: boolean | undefined) {
   if (speak === undefined) {
     changeState();
   } else {
@@ -63,7 +61,7 @@ export function doSpeaking(speak) {
     isSpeaking.set(false);
     if (speakInterval) {
       clearInterval(speakInterval);
-      speakInterval = null;
+      speakInterval = undefined;
     }
   }
 }

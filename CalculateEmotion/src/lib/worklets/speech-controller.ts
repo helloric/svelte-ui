@@ -1,19 +1,24 @@
-// @ts-ignore
+enum MicrophoneState {
+    IDLE = 0,
+    LISTENING = 1,
+    BLOCKED = 2
+}
+
 class SpeechController extends AudioWorkletProcessor {
 
      /** The audio frames. */
-    frames : Float32Array = Float32Array.of();
+    frames : Float32Array | undefined;
+
+    idle_frames: Float32Array | undefined;
 
     /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
 
     /** The microphone state. (0 = IDLE, 1 = LISTENING, 2 = BLOCKED) */
-    microphoneState : 0 | 1 | 2 = 2;
+    microphoneState : MicrophoneState = MicrophoneState.BLOCKED;
 
     /** The sampling rate */
     sampleRate = 44100;
-
-    port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
 
     /** The start time. Updates for each speech-frame. */
     startTime : number = currentTime;
@@ -29,13 +34,29 @@ class SpeechController extends AudioWorkletProcessor {
                     this.sampleRate = e.data['payload']['sampleRate'];
                     break;
                 case 'unblock_microphone':
-                    this.microphoneState = 0;
+                    this.microphoneState = MicrophoneState.IDLE;
                     break;
                 case 'block_microphone':
-                    this.microphoneState = 2;
+                    this.microphoneState = MicrophoneState.BLOCKED;
                     break;
             }
         }
+    }
+
+    /**
+     * Append incoming frame data to framesChannel member variable.
+     * @param framesCh member framesChannel0/1
+     * @param ch input data from ch0/1
+     * @returns combined data or ch0/1 if framesChannel is empty
+     */
+    private appendFrames(framesCh: Float32Array | undefined, ch: Float32Array): Float32Array {
+        if (!framesCh) {
+            return ch;
+        }
+        const temp0 = new Float32Array(framesCh.length + ch.length);
+        temp0.set(framesCh, 0);
+        temp0.set(ch, framesCh.length);
+        return temp0;
     }
 
     /**
@@ -45,32 +66,30 @@ class SpeechController extends AudioWorkletProcessor {
      * @param parameters The parameters
      * @returns Whether or not to continue processing.
      */
-    //@ts-ignore
-    process(inputs, outputs, parameters: any) {
+    process(inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>): boolean {
         let measurement = this.measureData(inputs[0][0]);
         this.port.postMessage({event: 'update_decibels', payload: {'decibels': measurement[1]}});
 
         switch (this.microphoneState) {
             case 0:
                 if (measurement[1] >= this.decibelThreshold) {
-                    this.frames = Float32Array.of(...this.frames, ...measurement[0]);
-                    this.microphoneState = 1;
+                    this.frames = this.appendFrames(this.frames, measurement[0]);
+                    this.microphoneState = MicrophoneState.LISTENING;
                     this.startTime = currentTime;
                 }
                 break;
             case 1:
-                this.frames = Float32Array.of(...this.frames, ...measurement[0]);
+                this.frames = this.appendFrames(this.frames, measurement[0]);
                 if (measurement[1] < this.decibelThreshold) {
-                    this.idle_frames = Float32Array.of(...this.idle_frames, ...measurement[0]);
+                    this.idle_frames = this.appendFrames(this.idle_frames, measurement[0]);
                     if (currentTime - this.startTime >= 0.3) {
-                        outputs[0] = this.frames;
+                        outputs[0][0] = this.frames;
                         this.send();
                     }
                 } else {
                     this.startTime = currentTime;
                 }
         }
-
         return true;
     }
     
@@ -81,7 +100,8 @@ class SpeechController extends AudioWorkletProcessor {
         this.port.postMessage({event: 'audio_available', payload: {'audio_data': this.frames}});
         this.frames = Float32Array.of();
         this.startTime = currentTime;
-        this.microphoneState = 2;
+        this.microphoneState = MicrophoneState.BLOCKED;
+        this.clear();
     }
 
     /**
@@ -97,6 +117,14 @@ class SpeechController extends AudioWorkletProcessor {
         let db = 20 * Math.log10(rms)
 
         return [data, db];
+    }
+
+    /**
+     * Clears the corresponding collections.
+     */
+    private clear = () => {
+        this.frames = undefined;
+        this.idle_frames = undefined;
     }
 }
 

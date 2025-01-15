@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import "$lib/botface.css";
     import base from "$lib/assets/base.svg?raw";
     import eye_amused from "$lib/assets/eye_amused.svg?raw";
@@ -23,6 +23,9 @@
     import mouth_thinking from "$lib/assets/mouth_thinking.svg?raw"
     import { doBlinking, isSpeaking, doSpeaking } from "$lib/faceanimation";
     import { onMount } from "svelte";
+    import { Emotion } from "../../emotion";
+
+
 
 
     //Animation
@@ -47,52 +50,38 @@
 
 
     //Face itself
-    
-    /** @type {string}*/
-    let eyeL;
+    let eyeL: string = '';
+    let eyeR: string = '';
+    let mouth: string = '';
 
-    /** @type {string}*/
-    let eyeR;
-
-    /** @type {string}*/
-    let mouth;
-
-    /** @type {boolean}*/
-    let blinking;
+    let blinking: boolean = false;
     let mouth_class = '';
     let eye_class = '';
 
     export let color = '';
     export let baseColor = '';
-    export let emotion = 'calm';
+    export let emotion: Emotion = Emotion.CALM;
     export let speaking = false;
 
     /**@param {string} emotion*/
-    function robotFace(emotion) {
+    function robotFace(emotion: Emotion) {
         const options = {
-            amused: {eyeR: eye_amused, eyeL: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: '', blinking: false, color: 'yellow'},
-            bored: {eyeR: eye_bored, eyeL: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true, color: 'grey'},
-            calm: {eyeR: eye_calm, eyeL: eye_calm, mouth: mouth_calm, mouth_class: '', eye_class: 'strokefill', blinking: true, color: 'dark_green'},
-            excited: {eyeR: eye_excited, eyeL: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: '', blinking: false, color: 'orange'},
-            frustrated: {eyeR: eye_frustrated, eyeL: eye_frustrated, mouth: mouth_frustrated, mouth_class: '',  eye_class: 'strokefill', blinking: true, color: 'red'},
-            happy: {eyeR: eye_happy, eyeL: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true, color: 'light_green'},
-            sad: {eyeR: eye_sad, eyeL: eye_sad, mouth: mouth_sad, mouth_class: '', eye_class: 'strokefill', blinking: true, color: 'light blue'},
-            worried: {eyeR: eye_worried, eyeL: eye_worried, mouth: mouth_worried, mouth_class: '', eye_class:'strokefill', blinking: true, color: 'dark_blue'},
-            thinking: {eyeR: eye_thinking_r, eyeL: eye_calm, mouth: mouth_thinking, mouth_class: '', eye_class: 'strokefill', blinking: true, color: ''},
+            [Emotion.AMUSED]: {eyeR: eye_amused, eyeL: eye_amused, mouth: mouth_amused, mouth_class: 'strokefill', eye_class: '', blinking: false, color: 'yellow'},
+            [Emotion.BORED]: {eyeR: eye_bored, eyeL: eye_bored, mouth: mouth_bored, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true, color: 'grey'},
+            [Emotion.CALM]: {eyeR: eye_calm, eyeL: eye_calm, mouth: mouth_calm, mouth_class: '', eye_class: 'strokefill', blinking: true, color: 'dark_green'},
+            [Emotion.EXCITED]: {eyeR: eye_excited, eyeL: eye_excited, mouth: mouth_excited, mouth_class: 'strokefill', eye_class: '', blinking: false, color: 'orange'},
+            [Emotion.FRUSTRATED]: {eyeR: eye_frustrated, eyeL: eye_frustrated, mouth: mouth_frustrated, mouth_class: '',  eye_class: 'strokefill', blinking: true, color: 'red'},
+            [Emotion.HAPPY]: {eyeR: eye_happy, eyeL: eye_happy, mouth: mouth_happy, mouth_class: 'strokefill', eye_class: 'strokefill', blinking: true, color: 'light_green'},
+            [Emotion.SAD]: {eyeR: eye_sad, eyeL: eye_sad, mouth: mouth_sad, mouth_class: '', eye_class: 'strokefill', blinking: true, color: 'light blue'},
+            [Emotion.WORRIED]: {eyeR: eye_worried, eyeL: eye_worried, mouth: mouth_worried, mouth_class: '', eye_class:'strokefill', blinking: true, color: 'dark_blue'},
+            [Emotion.THINKING]: {eyeR: eye_thinking_r, eyeL: eye_calm, mouth: mouth_thinking, mouth_class: '', eye_class: 'strokefill', blinking: true, color: ''},
         }
-        // @ts-ignore
         eyeR = options[emotion]['eyeR'];
-        // @ts-ignore
         eyeL = options[emotion]['eyeL'];
-        // @ts-ignore
         mouth = options[emotion]['mouth'];
-        // @ts-ignore
         mouth_class = options[emotion]['mouth_class'];
-        // @ts-ignore
         eye_class = options[emotion]['eye_class'];
-        // @ts-ignore
         blinking = options[emotion]['blinking'];
-        // @ts-ignore
         color = options[emotion]['color'];
     }
 </script>

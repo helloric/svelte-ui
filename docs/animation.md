@@ -148,7 +148,7 @@ export function doSpeaking() {
 
       clearInterval(speakInterval);
 
-      speakInterval = null;
+      speakInterval = undefined;
 
     }
 

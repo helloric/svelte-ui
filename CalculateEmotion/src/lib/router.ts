@@ -8,7 +8,7 @@ export let emotionsNumber = 2;
 
 
 /** @param {number} index*/
-export function setEmotion(index) {
+export function setEmotion(index: number) {
   emotionsNumber = index;
 }
 

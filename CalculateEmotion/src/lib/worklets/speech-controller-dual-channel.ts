@@ -1,10 +1,9 @@
-// @ts-ignore
 class SpeechControllerDualChannel extends AudioWorkletProcessor {
 
     /** The audio frames that should end up in Channel 0. */
-    framesChannel0 : Float32Array = Float32Array.of();
+    framesChannel0 : Float32Array | undefined;
     /** The audio frames that should end up in Channel 1. */
-    framesChannel1 : Float32Array = Float32Array.of();
+    framesChannel1 : Float32Array | undefined;
 
     /** The threshold above which audio is considered speech. */
     decibelThreshold = -64;
@@ -14,8 +13,6 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
 
     /** The sampling rate. */
     sampleRate = 44100;
-
-    port : MessagePort = this.port; // Purely done just so auto completion works, because for whatever reason the AudioWorkletProcessor is not yet in TypeScript?
 
     /** The start time. Updates for each speech-frame. */
     startTime : number = currentTime;
@@ -47,8 +44,7 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
      * @param parameters The parameters
      * @returns Whether or not to continue processing.
      */
-    //@ts-ignore
-    process(inputs, outputs, parameters: any) {
+    process(inputs: Float32Array[][], outputs: Float32Array[][], parameters: Record<string, Float32Array>): boolean {
         let channel0: Float32Array = inputs[0][0];
         let channel1: Float32Array = inputs[0][1];
 
@@ -73,7 +69,6 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
                     this.startTime = currentTime;
                 }
         }
-
         return true;
     }
 
@@ -113,34 +108,43 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
     }
 
     /**
+     * Append incoming frame data to framesChannel member variable.
+     * @param framesCh member framesChannel0/1
+     * @param ch input data from ch0/1
+     * @returns combined data or ch0/1 if framesChannel is empty
+     */
+    private appendFrames(framesCh: Float32Array | undefined, ch: Float32Array): Float32Array {
+        if (!framesCh) {
+            return ch;
+        }
+        const temp0 = new Float32Array(framesCh.length + ch.length);
+        temp0.set(framesCh, 0);
+        temp0.set(ch, framesCh.length);
+        return temp0;
+    }
+
+    /**
      * Collects frames into their corresponding collections.
+     * Appends all data from ch0/1 to this.framesChannel0/1
      * @param ch0 The frames from channel 0.
      * @param ch1 The frames from channel 1.
      */
     private collect = (ch0: Float32Array, ch1: Float32Array) => {
         // this.framesChannel0 = Float32Array.of(...this.framesChannel0, ...ch0)
-        const temp0 = new Float32Array(this.framesChannel0.length + ch0.length);
-        temp0.set(this.framesChannel0, 0);
-        temp0.set(ch0, this.framesChannel0.length);
-        this.framesChannel0 = temp0;
-        
+        this.framesChannel0 = this.appendFrames(this.framesChannel0, ch0);
         if (!ch1) {
-            this.framesChannel1 = temp0;
+            this.framesChannel1 = this.framesChannel0;
             return;
         }
-        // this.framesChannel1 = Float32Array.of(...this.framesChannel1, ...ch1)
-        const temp1 = new Float32Array(this.framesChannel1.length + ch1.length);
-        temp1.set(this.framesChannel1, 0);
-        temp1.set(ch1, this.framesChannel1.length);
-        this.framesChannel1 = temp1;
+        this.framesChannel1 = this.appendFrames(this.framesChannel1, ch1);
     }
 
     /**
      * Clears the corresponding collections.
      */
     private clear = () => {
-        this.framesChannel0 = Float32Array.of();
-        this.framesChannel1 = Float32Array.of();   
+        this.framesChannel0 = undefined;
+        this.framesChannel1 = undefined;
     }
 }
 
