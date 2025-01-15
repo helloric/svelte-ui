@@ -124,6 +124,10 @@ class SpeechControllerDualChannel extends AudioWorkletProcessor {
         temp0.set(ch0, this.framesChannel0.length);
         this.framesChannel0 = temp0;
         
+        if (!ch1) {
+            this.framesChannel1 = temp0;
+            return;
+        }
         // this.framesChannel1 = Float32Array.of(...this.framesChannel1, ...ch1)
         const temp1 = new Float32Array(this.framesChannel1.length + ch1.length);
         temp1.set(this.framesChannel1, 0);
