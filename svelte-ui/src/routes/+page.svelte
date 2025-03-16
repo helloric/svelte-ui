@@ -1,5 +1,5 @@
 <script>
-  import BotFace from "$lib/components/botface.svelte";
+  import BotFace from "$lib/components/Botface.svelte";
   import { emotionsNumber } from "$lib/router.js";
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
@@ -10,7 +10,7 @@
 
   //Avalable emotions and colors
   const emotions = ["amused", "bored", "calm", "excited", "frustrated", "happy", "sad", "worried", "thinking"];
-  const colors = ["red", "orange", "yellow", "light_green", "dark_green", "ligth blue", "dark_blue", "grey"];
+  const colors = ["red", "orange", "yellow", "light_green", "dark_green", "light blue", "dark_blue", "grey"];
   let color = colors[0];
 
 

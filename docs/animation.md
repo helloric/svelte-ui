@@ -176,7 +176,7 @@ If `conversation` is false, the Svelte Store for speaking is set to `false` and 
 
  
 
-## Inside `botface.svelte`
+## Inside `Botface.svelte`
 
  
 

@@ -1,11 +1,14 @@
 import { writable } from 'svelte/store';
 
 //Blinking function
+// TODO: use FLIP instead!
+// See https://svelte.dev/tutorial/svelte/animations
 export function doBlinking(interval = 5000, duration = 200) {
   const isBlinking = writable(false);
   function setupBlinking() {
     const blink = () => {
       isBlinking.set(true);
+
       setTimeout(() => {
         isBlinking.set(false);
       }, duration);
@@ -20,15 +23,11 @@ export function doBlinking(interval = 5000, duration = 200) {
   return { isBlinking, setupBlinking };
 }
 
-
-
 //Activates speaking
 export let conversation = false;
 export function changeState() {
   conversation = !conversation;
 }
-
-
 
 //Speaking function
 export const isSpeaking = writable(false);
@@ -46,7 +45,7 @@ export function doSpeaking(speak: boolean | undefined) {
   }
 
   if (conversation) {
-    const speach = () => {
+    const speech = () => {
       isSpeaking.set(true);
       setTimeout(() => {
         isSpeaking.set(false);
@@ -54,7 +53,7 @@ export function doSpeaking(speak: boolean | undefined) {
     };
 
     if (!speakInterval) {
-      speakInterval = setInterval(speach, interval);
+      speakInterval = setInterval(speech, interval);
     }
   }
   else {

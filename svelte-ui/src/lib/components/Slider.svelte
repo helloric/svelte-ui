@@ -91,14 +91,19 @@
 </style>
 
 <p>Lower Range: {lowerRange}, Upper Range: {upperRange}, Current: {Number(defaultValue).toFixed(2)}, Background: {Number(backgroundValue).toFixed(2)}</p>
-<div class="bar" on:pointerdown={e => {dragging = true; onDragged(e); dragging = false; dropOff();}}>
-    <div class="inner" style="width: {getDrawPos(defaultValue)}px">
-    </div>
-    <div class="back" style="width: {getDrawPos(backgroundValue)}px"></div>
-    <button 
-        class="slider" 
-        style="left: {getDrawPos(defaultValue)}px" 
-        on:mousedown={_ => dragging = true} 
-        on:mousemove={onDragged} 
-        on:mouseup={_ => { dragging = false; dropOff();} }></button>
+<div class="bar" onpointerdown={
+  e => {
+    dragging = true;
+    onDragged(e);
+    dragging = false;
+    dropOff();
+  }}>
+  <div class="inner" style="width: {getDrawPos(defaultValue)}px"></div>
+  <div class="back" style="width: {getDrawPos(backgroundValue)}px"></div>
+  <button aria-label="slide-button"
+    class="slider" 
+    style="left: {getDrawPos(defaultValue)}px" 
+    onmousedown={_ => dragging = true} 
+    onmousemove={onDragged} 
+    onmouseup={_ => { dragging = false; dropOff();} }></button>
 </div>

@@ -55,7 +55,7 @@
     --red: rgb(240, 20, 20);
     --orange: rgb(255, 122, 14);
     --yellow: rgb(255, 251, 0);
-    --ligthGreen: rgb(8, 255, 28);
+    --lightGreen: rgb(8, 255, 28);
     --darkGreen: rgb(50, 148, 58);
     --darkBlue: rgb(32, 29, 255);
     --grey: rgb(129, 129, 129);
@@ -95,12 +95,12 @@ body {
 }
 
 .light_green path {
-    stroke: var(--ligthGreen);
+    stroke: var(--lightGreen);
 }
 
 .light_green circle, .light_green ellipse, .light_green rect, .light_green.strokefill path {
-    stroke: var(--ligthGreen);
-    fill: var(--ligthGreen);
+    stroke: var(--lightGreen);
+    fill: var(--lightGreen);
 }
 
 .dark_green path {

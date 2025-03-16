@@ -1,1 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="175" height="150" viewBox="0 0 175 131.843"><path d="M2931.4,1780.667a70.413,70.413,0,1,0,97.358,29.594Z" transform="translate(-2882 -1776)" fill="#70c1e2" fill-rule="evenodd"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="175"
+   height="150"
+   viewBox="0 0 175 131.843"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="eye_frustrated.svg"
+   inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="5.3333333"
+     inkscape:cx="87.5625"
+     inkscape:cy="75"
+     inkscape:window-width="1920"
+     inkscape:window-height="1011"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     d="M 52.740053,11.042 A 63.600511,63.600511 0 1 0 140.67862,37.772768 Z"
+     fill="#70c1e2"
+     fill-rule="evenodd"
+     id="path1"
+     style="stroke-width:0.90325" />
+</svg>

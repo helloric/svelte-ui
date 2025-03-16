@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    width="175"
-   height="142"
-   viewBox="0 0 175 134.614"
+   height="169.4"
+   viewBox="0 0 175 169.4"
    version="1.1"
    id="svg1"
-   sodipodi:docname="eye_worried.svg"
+   sodipodi:docname="eye_small.svg"
    inkscape:version="1.4 (e7c3feb100, 2024-10-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -22,19 +22,23 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="5.8591549"
-     inkscape:cx="87.555288"
-     inkscape:cy="98.307692"
+     inkscape:zoom="4.7225503"
+     inkscape:cx="87.452747"
+     inkscape:cy="84.699997"
      inkscape:window-width="1920"
      inkscape:window-height="1011"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg1" />
-  <path
-     d="M 111.62522,7.4860333 A 65.802827,65.802827 0 1 1 23.395924,42.968216 Z"
+  <circle
+     cx="63.678364"
+     cy="101.45618"
+     r="53.348679"
+     transform="rotate(-12.886)"
      fill="#70c1e2"
-     fill-rule="evenodd"
-     id="path1"
-     style="stroke-width:0.934553" />
+     stroke="#a8c0cd"
+     stroke-miterlimit="22.926"
+     stroke-width="0.429498"
+     id="circle1" />
 </svg>
