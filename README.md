@@ -14,7 +14,7 @@
 3. Open the terminal inside Visual Studio Code and type `npm install` to install the needed node modules
 4. Then type the following:
    ```
-   cd CalculateEmotion
+   cd svelte-ui
    npm run dev
    ```
    You can now view the botface at [http://localhost:5173/](http://localhost:5173/). 
