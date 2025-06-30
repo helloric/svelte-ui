@@ -1,6 +1,6 @@
 {
-    "ros.distro": "humble",
+    "ros.distro": "jazzy",
     "python.analysis.extraPaths": [
-        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+        "/opt/ros/jazzy/local/lib/python3.12/dist-packages"
     ]
 }
